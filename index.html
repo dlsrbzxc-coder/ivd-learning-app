@@ -701,6 +701,55 @@
                             <div style="color: white; font-size: 24px;">→</div>
                         </div>
                     </div>
+
+                    <!-- 월간 계획 -->
+                    <div class="category-card" onclick="goToCalendar()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="flex: 1;">
+                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">월간 계획</div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">팀 일정 및 목표 관리</div>
+                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">구글 캘린더</div>
+                            </div>
+                            <div style="color: white; font-size: 24px;">→</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 월간 계획 화면 -->
+        <div class="screen" id="calendar-screen">
+            <div class="back-button" onclick="goToScreen('home-screen')">←</div>
+            
+            <div class="header" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">
+                <h1>월간 계획</h1>
+                <p>팀 일정을 확인하세요</p>
+            </div>
+            
+            <div style="padding: 20px 20px 100px 20px;">
+                <div style="margin-bottom: 16px;">
+                    <button onclick="window.open('https://calendar.google.com/calendar/u/0/r?cid=68085263d241a32cb3d78e019e286ed5843eb10d706945bb23bd6cb2c0f496c5@group.calendar.google.com', '_blank')" style="
+                        width: 100%;
+                        padding: 12px;
+                        background: white;
+                        color: #f59e0b;
+                        border: 2px solid #f59e0b;
+                        border-radius: 8px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">
+                        새 탭에서 열기
+                    </button>
+                </div>
+                
+                <div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 16px; box-shadow: var(--shadow-lg);">
+                    <iframe 
+                        src="https://calendar.google.com/calendar/embed?src=68085263d241a32cb3d78e019e286ed5843eb10d706945bb23bd6cb2c0f496c5%40group.calendar.google.com&ctz=Asia%2FSeoul" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
+                        frameborder="0" 
+                        scrolling="no">
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -2138,6 +2187,10 @@
 
         function goToRocheInfo() {
             goToScreen('roche-info-screen');
+        }
+
+        function goToCalendar() {
+            goToScreen('calendar-screen');
         }
 
         function showRocheDetail(topic) {

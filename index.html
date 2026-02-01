@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>체외진단검사 학습센터</title>
+    <title>그랜드 메드랩</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -648,8 +648,13 @@
         <!-- 홈 화면 -->
         <div class="screen active" id="home-screen">
             <div class="header">
-                <h1>체외진단 학습센터</h1>
-                <p>필요한 정보를 빠르게 찾아보세요</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <h1 style="margin: 0;">그랜드 메드랩</h1>
+                    <button onclick="showBackupMenu()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        💾 백업
+                    </button>
+                </div>
+                <p>영업사원을 위한 학습 플랫폼</p>
             </div>
             
             <div class="search-bar" onclick="goToScreen('search-screen')">
@@ -657,27 +662,159 @@
                 <span style="color: var(--gray-400);">시약, 장비, 검사명 검색...</span>
             </div>
             
-            <div class="category-grid">
-                <div class="category-card" onclick="goToCategory('chemistry', '화학검사')">
-                    <div class="category-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">C</div>
-                    <div class="category-name">화학검사</div>
-                    <div class="category-count">87개 항목</div>
+            <div style="padding: 20px 20px 120px;">
+                <!-- 메인 카테고리 -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <!-- 시약 정보 -->
+                    <div class="category-card" onclick="goToReagents()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; flex-shrink: 0;">R</div>
+                            <div style="flex: 1;">
+                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">시약 정보</div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">화학검사 · 면역검사 · 혈액검사</div>
+                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">총 177개 항목</div>
+                            </div>
+                            <div style="color: white; font-size: 24px;">→</div>
+                        </div>
+                    </div>
+
+                    <!-- 장비 정보 -->
+                    <div class="category-card" onclick="goToCategory('equipment', '장비정보')" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; flex-shrink: 0;">E</div>
+                            <div style="flex: 1;">
+                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">장비 정보</div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">ROCHE 장비 사양 및 관리</div>
+                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">총 16개 항목</div>
+                            </div>
+                            <div style="color: white; font-size: 24px;">→</div>
+                        </div>
+                    </div>
+
+                    <!-- 로슈 기본정보 -->
+                    <div class="category-card" onclick="goToRocheInfo()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; flex-shrink: 0;">ⓡ</div>
+                            <div style="flex: 1;">
+                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">로슈 기본정보</div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">회사소개 · 제품 · 영업 가이드</div>
+                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">영업사원 필독</div>
+                            </div>
+                            <div style="color: white; font-size: 24px;">→</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="category-card" onclick="goToCategory('immunity', '면역검사')">
-                    <div class="category-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">I</div>
-                    <div class="category-name">면역검사</div>
-                    <div class="category-count">80개 항목</div>
+            </div>
+        </div>
+        
+        <!-- 시약 정보 선택 화면 (중간 화면) -->
+        <div class="screen" id="reagents-screen">
+            <div class="back-button" onclick="goToScreen('home-screen')">←</div>
+            
+            <div class="header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h1>시약 정보</h1>
+                <p>카테고리를 선택하세요</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px;">
+                <div class="category-grid">
+                    <div class="category-card" onclick="goToCategory('chemistry', '화학검사')">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">C</div>
+                        <div class="category-name">화학검사</div>
+                        <div class="category-count">87개 항목</div>
+                    </div>
+                    <div class="category-card" onclick="goToCategory('immunity', '면역검사')">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">I</div>
+                        <div class="category-name">면역검사</div>
+                        <div class="category-count">88개 항목</div>
+                    </div>
+                    <div class="category-card" onclick="goToCategory('blood', '혈액검사')">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">B</div>
+                        <div class="category-name">혈액검사</div>
+                        <div class="category-count">2개 항목</div>
+                    </div>
                 </div>
-                <div class="category-card" onclick="goToCategory('blood', '혈액검사')">
-                    <div class="category-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">B</div>
-                    <div class="category-name">혈액검사</div>
-                    <div class="category-count">2개 항목</div>
+            </div>
+        </div>
+        
+        <!-- 로슈 기본정보 화면 -->
+        <div class="screen" id="roche-info-screen">
+            <div class="back-button" onclick="goToScreen('home-screen')">←</div>
+            
+            <div class="header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <h1>로슈 기본정보</h1>
+                <p>영업사원을 위한 필수 학습 자료</p>
+            </div>
+            
+            <div class="list-container" style="padding-bottom: 100px;">
+                <div class="list-item" onclick="showRocheDetail('company')">
+                    <div style="flex: 1;">
+                        <div class="list-title">회사 소개</div>
+                        <div class="list-subtitle">ROCHE 역사와 비전</div>
+                    </div>
+                    <div class="list-arrow">→</div>
                 </div>
-                <div class="category-card" onclick="goToCategory('equipment', '장비정보')">
-                    <div class="category-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">E</div>
-                    <div class="category-name">장비정보</div>
-                    <div class="category-count">16개 항목</div>
+                
+                <div class="list-item" onclick="showRocheDetail('products')">
+                    <div style="flex: 1;">
+                        <div class="list-title">제품 라인업</div>
+                        <div class="list-subtitle">진단검사 제품 포트폴리오</div>
+                    </div>
+                    <div class="list-arrow">→</div>
                 </div>
+                
+                <div class="list-item" onclick="showRocheDetail('principle')">
+                    <div style="flex: 1;">
+                        <div class="list-title">검사 원리</div>
+                        <div class="list-subtitle">ECLIA 및 주요 검사법</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                </div>
+                
+                <div class="list-item" onclick="showRocheDetail('qc')">
+                    <div style="flex: 1;">
+                        <div class="list-title">품질 관리 (QC)</div>
+                        <div class="list-subtitle">정도 관리 및 교정</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                </div>
+                
+                <div class="list-item" onclick="showRocheDetail('maintenance')">
+                    <div style="flex: 1;">
+                        <div class="list-title">장비 관리</div>
+                        <div class="list-subtitle">유지보수 및 점검</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                </div>
+                
+                <div class="list-item" onclick="showRocheDetail('troubleshooting')">
+                    <div style="flex: 1;">
+                        <div class="list-title">문제 해결</div>
+                        <div class="list-subtitle">Troubleshooting 가이드</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                </div>
+                
+                <div class="list-item" onclick="showRocheDetail('sales')">
+                    <div style="flex: 1;">
+                        <div class="list-title">영업 Tips</div>
+                        <div class="list-subtitle">고객 응대 및 제안 전략</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 로슈 상세 정보 화면 -->
+        <div class="screen" id="roche-detail-screen">
+            <div class="back-button" onclick="goToScreen('roche-info-screen')">←</div>
+            
+            <div class="detail-header">
+                <h2 id="roche-detail-title">회사 소개</h2>
+            </div>
+            
+            <div class="detail-container" id="roche-detail-content" style="padding-bottom: 100px;">
+                <!-- JavaScript로 동적 생성 -->
             </div>
         </div>
         
@@ -688,6 +825,13 @@
             <div class="section-header">
                 <h2 id="category-title">화학검사</h2>
                 <span class="count" id="item-count">총 24개</span>
+            </div>
+            
+            <!-- 서브카테고리 필터 (면역검사일 때만 표시) -->
+            <div id="subcategory-filter" style="display: none; padding: 0 20px 16px 20px; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                <div id="subcategory-chips" style="display: flex; gap: 8px; flex-wrap: nowrap;">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
             </div>
             
             <div class="search-bar">
@@ -1369,529 +1513,464 @@
                 }
             ],
             immunity: [
-                // Infectious disease
-                { id: 11, name: 'Anti-HAV IgM', method: 'ECLIA', category: '면역검사',
-                  principle: 'A형 간염 바이러스에 대한 IgM 항체를 검출합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'A형간염']
+                // Infectious Disease (감염성 질환)
+                { id: 1001, name: 'Anti-HAV', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'A형간염항체_IgG',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'A형간염', 'IgG']
                 },
-                { id: 12, name: 'Anti-HAV II', method: 'ECLIA', category: '면역검사',
-                  principle: 'A형 간염 바이러스에 대한 총 항체를 검출합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'A형간염']
+                { id: 1002, name: 'Anti-HAV IgM', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'A형간염항체_IgM',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'A형간염', 'IgM']
                 },
-                { id: 13, name: 'HBsAg II', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 표면 항원을 검출합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정성/정량 분석',
+                { id: 1003, name: 'Anti-HBc', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'B형간염핵심항체_IgG',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'B형간염', 'IgG']
+                },
+                { id: 1004, name: 'Anti-HBc IgM', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'B형간염핵심항체_IgM',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'B형간염', 'IgM']
+                },
+                { id: 1005, name: 'Anti-HBe', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'B형간염e항체 (Hepatitis B Envelope Antibody)',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
                   tags: ['면역검사', '감염성질환', 'B형간염']
                 },
-                { id: 14, name: 'Anti-HBs II', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 표면 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 1006, name: 'Anti-HBs II', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'B형간염표면항체',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
                   tags: ['면역검사', '감염성질환', 'B형간염']
                 },
-                { id: 15, name: 'HBsAg II quant II', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 표면 항원의 정량 검사입니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'B형간염']
+                { id: 1007, name: 'HBeAg', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'B형간염e항원 (Hepatitis B Envelope Antigen)',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'B형간염', '항원']
                 },
-                { id: 16, name: 'HBeAg', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 e 항원을 검출합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'B형간염']
+                { id: 1008, name: 'HBsAg II', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'B형간염표면항원 (Hepatitis B Surface Antigen)',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'B형간염', '항원']
                 },
-                { id: 17, name: 'Anti-HBe', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 e 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'B형간염']
-                },
-                { id: 18, name: 'Anti-HBc', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 core 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'B형간염']
-                },
-                { id: 19, name: 'Anti-HBc IgM', method: 'ECLIA', category: '면역검사',
-                  principle: 'B형 간염 core IgM 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'B형간염']
-                },
-                { id: 20, name: 'Anti-HCV', method: 'ECLIA', category: '면역검사',
-                  principle: 'C형 간염 바이러스 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                { id: 1009, name: 'Anti-HCV II', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'C형간염항체',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
                   tags: ['면역검사', '감염성질환', 'C형간염']
                 },
-                { id: 21, name: 'HIV duo', method: 'ECLIA', category: '면역검사',
-                  principle: 'HIV 항원 및 항체를 동시 검출합니다.',
-                  procedure: '1. 검체와 시약 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'HIV']
+                { id: 1010, name: 'HIV Ag', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'HIV(인간면역결핍바이러스) 항원',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'HIV', '항원']
                 },
-                { id: 22, name: 'HTLV-1,2', method: 'ECLIA', category: '면역검사',
-                  principle: 'HTLV-1,2 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'HTLV']
+                { id: 1011, name: 'HIV Combi PT', subcategory: 'Infectious Disease', method: '100T', category: '면역검사',
+                  principle: 'HIV 항원/항체(동시 선별)',
+                  procedure: 'QC: 시약내 포함\nCal: 시약내 포함',
+                  tags: ['면역검사', '감염성질환', 'HIV', '항원항체']
                 },
-                { id: 23, name: 'Syphilis', method: 'ECLIA', category: '면역검사',
-                  principle: '매독균 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성/정량 분석',
-                  tags: ['면역검사', '감염성질환', '매독']
-                },
-                { id: 24, name: 'Rubella IgG', method: 'ECLIA', category: '면역검사',
-                  principle: '풍진 IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', '풍진']
-                },
-                { id: 25, name: 'Rubella IgM', method: 'ECLIA', category: '면역검사',
-                  principle: '풍진 IgM 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', '풍진']
-                },
-                { id: 26, name: 'Toxo IgG', method: 'ECLIA', category: '면역검사',
-                  principle: '톡소플라즈마 IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', '톡소플라즈마']
-                },
-                { id: 27, name: 'Toxo IgM', method: 'ECLIA', category: '면역검사',
-                  principle: '톡소플라즈마 IgM 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', '톡소플라즈마']
-                },
-                { id: 28, name: 'Toxo avidity', method: 'ECLIA', category: '면역검사',
-                  principle: '톡소플라즈마 항체의 결합력을 측정합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. Avidity 측정\n3. 감염 시기 판정',
-                  tags: ['면역검사', '감염성질환', '톡소플라즈마']
-                },
-                { id: 29, name: 'CMV IgG', method: 'ECLIA', category: '면역검사',
-                  principle: '거대세포바이러스 IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'CMV']
-                },
-                { id: 30, name: 'CMV IgM', method: 'ECLIA', category: '면역검사',
-                  principle: '거대세포바이러스 IgM 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'CMV']
-                },
-                { id: 31, name: 'CMV avidity', method: 'ECLIA', category: '면역검사',
-                  principle: 'CMV 항체의 결합력을 측정합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. Avidity 측정\n3. 감염 시기 판정',
-                  tags: ['면역검사', '감염성질환', 'CMV']
-                },
-                { id: 32, name: 'Anti-SARS-CoV-2 total', method: 'ECLIA', category: '면역검사',
-                  principle: 'SARS-CoV-2 총 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성/정량 분석',
-                  tags: ['면역검사', '감염성질환', 'COVID-19']
-                },
-                { id: 33, name: 'Anti-SARS-CoV-2 S', method: 'ECLIA', category: '면역검사',
-                  principle: 'SARS-CoV-2 스파이크 단백 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'COVID-19']
-                },
-                { id: 34, name: 'HSV-1 IgG', method: 'ECLIA', category: '면역검사',
-                  principle: '단순포진 바이러스 1형 IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'HSV']
-                },
-                { id: 35, name: 'HSV-2 IgG', method: 'ECLIA', category: '면역검사',
-                  principle: '단순포진 바이러스 2형 IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'HSV']
-                },
-                { id: 36, name: 'EBV IgM', method: 'ECLIA', category: '면역검사',
-                  principle: 'Epstein-Barr 바이러스 IgM 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
-                  tags: ['면역검사', '감염성질환', 'EBV']
-                },
-                { id: 37, name: 'EBV VCA IgG', method: 'ECLIA', category: '면역검사',
-                  principle: 'EBV VCA IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'EBV']
-                },
-                { id: 38, name: 'EBV EBNA IgG', method: 'ECLIA', category: '면역검사',
-                  principle: 'EBV EBNA IgG 항체를 검출합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '감염성질환', 'EBV']
-                },
-                
-                // Thyroid function
-                { id: 50, name: 'TG II', method: 'ECLIA', category: '면역검사',
-                  principle: '티로글로불린을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+
+                // Thyroid (갑상선)
+                { id: 2001, name: 'TSH', subcategory: 'Thyroid', method: '200T', category: '면역검사',
+                  principle: '갑상선자극호르몬 (Thyroid Stimulating Hormone). 갑상선 호르몬이 부족할 때 갑상선을 자극해 호르몬을 생성하게 함',
+                  procedure: 'QC: TSH CS\nCal: Universal',
                   tags: ['면역검사', '갑상선', '호르몬']
                 },
-                { id: 51, name: 'Anti-Tg', method: 'ECLIA', category: '면역검사',
-                  principle: '티로글로불린 항체를 측정합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '자가면역']
-                },
-                { id: 52, name: 'Anti-TPO', method: 'ECLIA', category: '면역검사',
-                  principle: '갑상선 과산화효소 항체를 측정합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '자가면역']
-                },
-                { id: 53, name: 'Anti-TSHR', method: 'ECLIA', category: '면역검사',
-                  principle: 'TSH 수용체 항체를 측정합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '자가면역']
-                },
-                { id: 54, name: 'TSH', method: 'ECLIA', category: '면역검사',
-                  principle: '갑상선 자극 호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 2002, name: 'FT3 III', subcategory: 'Thyroid', method: '200T', category: '면역검사',
+                  principle: 'Free T3 (Free Thyroxine 3), 갑상선 관련 질병 진단 및 모니터링',
+                  procedure: 'QC: FT3 CS\nCal: Universal',
                   tags: ['면역검사', '갑상선', '호르몬']
                 },
-                { id: 55, name: 'T3', method: 'ECLIA', category: '면역검사',
-                  principle: 'Triiodothyronine을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 2003, name: 'FT4 II', subcategory: 'Thyroid', method: '200T', category: '면역검사',
+                  principle: '유리싸이록신 (Free Thyroxine 4), 갑상선 기능 장애, 갑상선 억제요법 모니터링. T4가 티록신결합단백질(TBP)과 떨어져 있는 형태',
+                  procedure: 'QC: FT4 CS\nCal: Universal',
                   tags: ['면역검사', '갑상선', '호르몬']
                 },
-                { id: 56, name: 'T4', method: 'ECLIA', category: '면역검사',
-                  principle: 'Thyroxine을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '호르몬']
+                { id: 2004, name: 'T3', subcategory: 'Thyroid', method: '200T', category: '면역검사',
+                  principle: '트리요도싸이로닌 (Triiodothyronine), 갑상선 호르몬 효과진척 모니터링. 활성형 갑상선 호르몬, 실제로 가장 중요한 역할을 하는 갑상선 호르몬',
+                  procedure: 'QC: T3 CS\nCal: Universal',
+                  tags: ['면역검사', '갑상선', '호르몬', '활성형']
                 },
-                { id: 57, name: 'FT3 III', method: 'ECLIA', category: '면역검사',
-                  principle: '유리 T3를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '호르몬']
+                { id: 2005, name: 'T4', subcategory: 'Thyroid', method: '200T', category: '면역검사',
+                  principle: '싸이록신 (Tetraiodothyronine/Thyroxine), 갑상선 관련 질병 발견 및 모니터링. 주 성분은 아이오딘(iodine)=요오드 / 비활성형으로 TBP와 결합한 형태',
+                  procedure: 'QC: T4 CS\nCal: Universal',
+                  tags: ['면역검사', '갑상선', '호르몬', '비활성형']
                 },
-                { id: 58, name: 'FT4 IV', method: 'ECLIA', category: '면역검사',
-                  principle: '유리 T4를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '호르몬']
+                { id: 2006, name: 'T-Uptake', subcategory: 'Thyroid', method: '200T', category: '면역검사',
+                  principle: '그레이브스(갑상선 기능 항진증 원인 질환) 환자 진단',
+                  procedure: 'QC: T-Uptake CS\nCal: Universal',
+                  tags: ['면역검사', '갑상선', '진단']
                 },
-                { id: 59, name: 'T-Uptake', method: 'ECLIA', category: '면역검사',
-                  principle: 'T3 섭취율을 측정합니다.',
-                  procedure: '1. 검체와 시약 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '갑상선', '기능검사']
-                },
-                { id: 60, name: 'Calcitonin', method: 'ECLIA', category: '면역검사',
-                  principle: '칼시토닌 호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 2007, name: 'TG II', subcategory: 'Thyroid', method: '100T', category: '면역검사',
+                  principle: '싸이로글로불린 (Thyroglobulin), 갑상선 전 절제술 후 암의 재발 조기발견에 이용',
+                  procedure: 'QC: TG G2 CS\nCal: Universal',
                   tags: ['면역검사', '갑상선', '종양표지자']
                 },
-                
-                // Tumor markers
-                { id: 70, name: 'AFP', method: 'ECLIA', category: '면역검사',
-                  principle: '알파태아단백을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '간암']
+                { id: 2008, name: 'A-TSHR', subcategory: 'Thyroid', method: '100T', category: '면역검사',
+                  principle: '갑상선자극면역글로불린 (TSH Receptor Antibody), 자가면역성 질환/갑상선염 진단',
+                  procedure: 'QC: 시약내 포함\nCal: ThyroAB',
+                  tags: ['면역검사', '갑상선', '자가면역']
                 },
-                { id: 71, name: 'PIVKA II', method: 'ECLIA', category: '면역검사',
-                  principle: '비정상 프로트롬빈을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '간암']
+                { id: 2009, name: 'A-TG', subcategory: 'Thyroid', method: '100T', category: '면역검사',
+                  principle: '항갑상선글로불린항체 (Thyroglobulin antibody), 하시모토(갑상선 기능 저하증 원인 질환) 환자 진단',
+                  procedure: 'QC: Anti-TG CS\nCal: ThyroAB',
+                  tags: ['면역검사', '갑상선', '자가면역', '하시모토']
                 },
-                { id: 72, name: 'CEA', method: 'ECLIA', category: '면역검사',
-                  principle: '암배아항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', 'ECLIA']
+                { id: 2010, name: 'A-TPO', subcategory: 'Thyroid', method: '100T', category: '면역검사',
+                  principle: '항마이크로좀항체 (Thyroid Peroxidase Antibody), 하시모토, 그레이브스 병 감별진단',
+                  procedure: 'QC: Anti-TPO CS\nCal: ThyroAB',
+                  tags: ['면역검사', '갑상선', '자가면역']
                 },
-                { id: 73, name: 'total PSA', method: 'ECLIA', category: '면역검사',
-                  principle: '전립선 특이 항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '전립선암']
+                { id: 2011, name: 'Calcitonin', subcategory: 'Thyroid', method: '100T', category: '면역검사',
+                  principle: '혈중 칼슘농도를 낮추는 기능을 가져 부갑상선호르몬과 반대작용을 함, 파골세포의 활동을 저하시켜 칼슘 유리를 억제하며 골생성세포의 활성을 증가시켜 칼슘 침착유도를 함',
+                  procedure: 'QC: Calcitonin CS\nCal: Varia',
+                  tags: ['면역검사', '갑상선', '칼슘대사']
                 },
-                { id: 74, name: 'free PSA', method: 'ECLIA', category: '면역검사',
-                  principle: '유리 PSA를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '전립선암']
+
+                // Anemia (빈혈)
+                { id: 3001, name: 'Folate III', subcategory: 'Anemia', method: '100T', category: '면역검사',
+                  principle: '비타민 엽산(Folate) - 성장(세포분열과 DNA합성과정) 뿐 아니라 혈구형성에도 필요, 영양빈혈 대적혈구 빈혈 진단',
+                  procedure: 'QC: Folate III CS\nCal: Varia',
+                  tags: ['면역검사', '빈혈', '비타민', '엽산']
                 },
-                { id: 75, name: 'CA 15-3 II', method: 'ECLIA', category: '면역검사',
-                  principle: 'CA 15-3 항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '유방암']
+                { id: 3002, name: 'Vitamin B12 II', subcategory: 'Anemia', method: '100T', category: '면역검사',
+                  principle: '비타민 B12 - 간에 함유되는 항 악성 빈혈인자, 영양빈혈 대적혈구 빈혈 진단',
+                  procedure: 'QC: Vitamin B12 G2 CS\nCal: Varia',
+                  tags: ['면역검사', '빈혈', '비타민', 'B12']
                 },
-                { id: 76, name: 'CA 19-9', method: 'ECLIA', category: '면역검사',
-                  principle: 'CA 19-9 항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '췌장암']
-                },
-                { id: 77, name: 'CA 72-4', method: 'ECLIA', category: '면역검사',
-                  principle: 'CA 72-4 항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '위암']
-                },
-                { id: 78, name: 'CA 125 II', method: 'ECLIA', category: '면역검사',
-                  principle: 'CA 125 항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '난소암']
-                },
-                { id: 79, name: 'HE4', method: 'ECLIA', category: '면역검사',
-                  principle: '인간 부고환 단백 4를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '난소암']
-                },
-                { id: 80, name: 'Cyfra 21-1', method: 'ECLIA', category: '면역검사',
-                  principle: '사이토케라틴 19 단편을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '폐암']
-                },
-                { id: 81, name: 'NSE', method: 'ECLIA', category: '면역검사',
-                  principle: '신경특이 에놀라제를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '소세포폐암']
-                },
-                { id: 82, name: 'SCC', method: 'ECLIA', category: '면역검사',
-                  principle: '편평상피세포암 항원을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '편평상피암']
-                },
-                { id: 83, name: 'ProGRP', method: 'ECLIA', category: '면역검사',
-                  principle: 'Pro-gastrin releasing peptide를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '종양표지자', '소세포폐암']
-                },
-                
-                // Cardiac
-                { id: 90, name: 'CK-MB', method: 'ECLIA', category: '면역검사',
-                  principle: 'Creatine kinase MB를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '심근경색']
-                },
-                { id: 91, name: 'Digoxin', method: 'ECLIA', category: '면역검사',
-                  principle: '디곡신 약물 농도를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '약물모니터링']
-                },
-                { id: 92, name: 'Myoglobin', method: 'ECLIA', category: '면역검사',
-                  principle: '미오글로빈을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '심근경색']
-                },
-                { id: 93, name: 'GDF-15', method: 'ECLIA', category: '면역검사',
-                  principle: 'Growth differentiation factor 15를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '바이오마커']
-                },
-                { id: 94, name: 'proBNP', method: 'ECLIA', category: '면역검사',
-                  principle: 'NT-proBNP를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '심부전']
-                },
-                { id: 95, name: 'Troponin T hs', method: 'ECLIA', category: '면역검사',
-                  principle: '고감도 트로포닌 T를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '심근경색']
-                },
-                { id: 96, name: 'Troponin I', method: 'ECLIA', category: '면역검사',
-                  principle: '트로포닌 I를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '심장', '심근경색']
-                },
-                
-                // Anemia
-                { id: 100, name: 'Ferritin', method: 'ECLIA', category: '면역검사',
-                  principle: '페리틴을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 3003, name: 'Ferritin', subcategory: 'Anemia', method: '100T', category: '면역검사',
+                  principle: '철 저장 단백질, 혈액종양, 철 결핍성 빈혈 진단',
+                  procedure: 'QC: Ferritin CS\nCal: Tumor Marker',
                   tags: ['면역검사', '빈혈', '철대사']
                 },
-                { id: 101, name: 'Folate GIII', method: 'ECLIA', category: '면역검사',
-                  principle: '엽산을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '빈혈', '비타민']
+
+                // Cardiac Marker (심장 표지자)
+                { id: 4001, name: 'CK-MB (STAT)', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '심근 허혈성 진단 (Creatine Kinase MB Isoenzyme)',
+                  procedure: 'QC: CK-MB(STAT) CS\nCal: Cardiac',
+                  tags: ['면역검사', '심장', '심근경색']
                 },
-                { id: 102, name: 'Folate GIII(RBC)', method: 'ECLIA', category: '면역검사',
-                  principle: '적혈구 내 엽산을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '빈혈', '비타민']
+                { id: 4002, name: 'Myoglobin (STAT)', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '급성 심근경색 진단',
+                  procedure: 'QC: Myoglobin(STAT) CS\nCal: Cardiac',
+                  tags: ['면역검사', '심장', '심근경색', '급성']
                 },
-                { id: 103, name: 'Vitamin B12 II', method: 'ECLIA', category: '면역검사',
-                  principle: '비타민 B12를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '빈혈', '비타민']
+                { id: 4003, name: 'Pro BNP II (STAT)', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '심장표지자 - Pro Brain Natriuretic Peptide, 만성 심부전증 감별 및 모니터링',
+                  procedure: 'QC: Pro BNP II(STAT) CS\nCal: Cardiac',
+                  tags: ['면역검사', '심장', '심부전']
                 },
-                
-                // Fertility/Pregnancy
-                { id: 110, name: 'Estradiol III', method: 'ECLIA', category: '면역검사',
-                  principle: '에스트라디올을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '임신']
+                { id: 4004, name: 'Troponin T (STAT)', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '심장 근육 손상',
+                  procedure: 'QC: Troponin T(STAT) CS\nCal: Troponin T',
+                  tags: ['면역검사', '심장', '근육손상']
                 },
-                { id: 111, name: 'HCG+beta', method: 'ECLIA', category: '면역검사',
-                  principle: 'HCG와 beta subunit을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '임신']
+                { id: 4005, name: 'Trop. T hs (STAT)', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '심장 근육 손상 (고감도)',
+                  procedure: 'QC: Trop. T hs(STAT) CS\nCal: Troponin',
+                  tags: ['면역검사', '심장', '근육손상', '고감도']
                 },
-                { id: 112, name: 'HCG STAT', method: 'ECLIA', category: '면역검사',
-                  principle: 'HCG 응급 검사입니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '임신']
+                { id: 4006, name: 'Troponin I (STAT)', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '심장 근육 손상',
+                  procedure: 'QC: Troponin I(STAT) CS\nCal: Troponin',
+                  tags: ['면역검사', '심장', '근육손상']
                 },
-                { id: 113, name: 'FSH', method: 'ECLIA', category: '면역검사',
-                  principle: '난포자극호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '생식']
+                { id: 4007, name: 'Digoxin', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '울혈심부전증 감별 및 모니터링',
+                  procedure: 'QC: Digoxin CS\nCal: Cardiac',
+                  tags: ['면역검사', '심장', '약물']
                 },
-                { id: 114, name: 'LH', method: 'ECLIA', category: '면역검사',
-                  principle: '황체형성호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '생식']
+                { id: 4008, name: 'Digitoxin', subcategory: 'Cardiac Marker', method: '100T', category: '면역검사',
+                  principle: '심장 기능 장애 치료',
+                  procedure: 'QC: Digitoxin CS\nCal: Cardiac',
+                  tags: ['면역검사', '심장', '약물', '치료']
                 },
-                { id: 115, name: 'AMH Plus', method: 'ECLIA', category: '면역검사',
-                  principle: '항뮬러관호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '난소예비력']
+
+                // Fertility/Pregnancy (생식/임신)
+                { id: 5001, name: 'DHEA-S', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '남성형 다모증, 남성화 진단, 각종 부신피질 질환. 특히 cushing증후군의 부신병변 감별에 유용한 검사 (Dehydroepiandrosterone sulfate)',
+                  procedure: 'QC: DHEA-S CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '부신']
                 },
-                { id: 116, name: 'Progesterone III', method: 'ECLIA', category: '면역검사',
-                  principle: '프로게스테론을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '생식']
+                { id: 5002, name: 'E2 III', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '성선호르몬 - 에스트라디올 (Estradiol), 생식 관련 기능 이상 진단. 난소기능(난포발육상태)진단, 불임의 진단 및 치료, 배란 유발 모니터링에 유용한 검사',
+                  procedure: 'QC: Estradiol G3 CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '에스트로겐']
                 },
-                { id: 117, name: 'Prolactin II', method: 'ECLIA', category: '면역검사',
-                  principle: '프로락틴을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '생식']
+                { id: 5003, name: 'FSH', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '성선자극호르몬 - 난포자극호르몬 (Follicle Stimulating Hormone), 생식샘 체계의 기능이상 진단. 뇌하수체 생산 및 방출장애 여부, 시상하부 - 성선계 장애 여부 파악',
+                  procedure: 'QC: FSH CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '뇌하수체']
                 },
-                { id: 118, name: 'SHBG', method: 'ECLIA', category: '면역검사',
-                  principle: '성호르몬결합글로불린을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '생식']
+                { id: 5004, name: 'HCG+β', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '임신의 지표 (Human chorionic gonadotropin), (비임신: 고혈압, 유방암, 난소암)',
+                  procedure: 'QC: HCG+beta CS\nCal: Universal',
+                  tags: ['면역검사', '임신', '호르몬']
                 },
-                { id: 119, name: 'Testosterone II', method: 'ECLIA', category: '면역검사',
-                  principle: '테스토스테론을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '생식']
+                { id: 5005, name: 'LH', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '성선자극호르몬 - 황체형성호르몬 (Luteinizing Hormone), 생식샘 체계의 기능이상 진단. FSH와 함께 뇌하수체 성선자극호르몬의 생산, 분비능 평가',
+                  procedure: 'QC: LH CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '뇌하수체']
                 },
-                { id: 120, name: 'DHEA-S', method: 'ECLIA', category: '면역검사',
-                  principle: 'Dehydroepiandrosterone sulfate를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '부신']
+                { id: 5006, name: 'AMH', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '항뮬러관호르몬 (Anti Mullerian Hormone), 폐경 유무 판단과 과배란 유도 시 반응 및 난소능력 예측, 불임여성 및 폐경 여성에 이용',
+                  procedure: 'QC: AMH CS\nCal: AMH',
+                  tags: ['면역검사', '생식', '호르몬', '난소']
                 },
-                { id: 121, name: 'free βhCG', method: 'ECLIA', category: '면역검사',
-                  principle: '유리 베타 HCG를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '임신']
+                { id: 5007, name: 'Progesterone III', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '성선호르몬 - 프로게스테론, 배란 확인과 황체기 구분 진단',
+                  procedure: 'QC: Progesterone CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '황체']
                 },
-                { id: 122, name: 'PAPP-A', method: 'ECLIA', category: '면역검사',
-                  principle: 'Pregnancy-associated plasma protein A를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '임신']
+                { id: 5008, name: 'Prolactin', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '유즙분비 자극호르몬',
+                  procedure: 'QC: Prolactin CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '유즙']
                 },
-                { id: 123, name: 'sFLT-1', method: 'ECLIA', category: '면역검사',
-                  principle: 'Soluble fms-like tyrosine kinase 1을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '자간전증']
+                { id: 5009, name: 'SHBG', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '성 호르몬에 작용, 남성호르몬 작용 진단 (Sex Hormone Binding Globulin)',
+                  procedure: 'QC: SHBG CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬']
                 },
-                { id: 124, name: 'PlGF', method: 'ECLIA', category: '면역검사',
-                  principle: 'Placental growth factor를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '자간전증']
+                { id: 5010, name: 'Testosterone II', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '성선호르몬 - 테스토스테론, 남성호르몬 작용 진단',
+                  procedure: 'QC: Testosterone II CS\nCal: Universal',
+                  tags: ['면역검사', '생식', '호르몬', '남성호르몬']
                 },
-                
-                // Hormones & Other
-                { id: 130, name: 'ACTH', method: 'ECLIA', category: '면역검사',
-                  principle: '부신피질자극호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '뇌하수체']
+                { id: 5011, name: 'PAPP-A', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '다운증후군 (Pregnancy Associated Plasma Protein A)',
+                  procedure: 'QC: PAPP-A CS\nCal: Maternal Care',
+                  tags: ['면역검사', '임신', '선별검사', '다운증후군']
                 },
-                { id: 131, name: 'Cortisol II', method: 'ECLIA', category: '면역검사',
-                  principle: '코르티솔을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '부신']
+                { id: 5012, name: 'free β-HCG', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: '다운증후군',
+                  procedure: 'QC: free β-HCG CS\nCal: Maternal Care',
+                  tags: ['면역검사', '임신', '선별검사', '다운증후군']
                 },
-                { id: 132, name: 'hGH', method: 'ECLIA', category: '면역검사',
-                  principle: '성장호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '성장']
+                { id: 5013, name: 'sFlt-1', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: 'Preeclampsia(자간전증) 진단 (soluble Fms Like Tyrosine kinase-1)',
+                  procedure: 'QC: sFlt-a CS\nCal: Multimarker',
+                  tags: ['면역검사', '임신', '자간전증']
                 },
-                { id: 133, name: 'IGF-1', method: 'ECLIA', category: '면역검사',
-                  principle: 'Insulin-like growth factor 1을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '성장']
+                { id: 5014, name: 'PlGF', subcategory: 'Fertility/Pregnancy', method: '100T', category: '면역검사',
+                  principle: 'Preeclampsia(자간전증) 진단 (Placental Growth Factor)',
+                  procedure: 'QC: PlGF CS\nCal: Multimarker',
+                  tags: ['면역검사', '임신', '자간전증']
                 },
-                { id: 134, name: 'IGFBP-3', method: 'ECLIA', category: '면역검사',
-                  principle: 'IGF binding protein 3를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '성장']
+
+                // Tumor Marker (종양 표지자)
+                { id: 6001, name: 'AFP', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '알파피토프로테인 (α-fetoprotein), 간세포암, Triple marker로 활용, 난소암, 배아세포암, 생식세포암',
+                  procedure: 'QC: AFP CS\nCal: Universal / TM',
+                  tags: ['면역검사', '종양표지자', '간암', '난소암']
                 },
-                { id: 135, name: 'Insulin', method: 'ECLIA', category: '면역검사',
-                  principle: '인슐린을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '당뇨']
+                { id: 6002, name: 'CA 125', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '난소암(부인과질환) (Cancer Antigen 125)',
+                  procedure: 'QC: CA 125 G2 CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '난소암']
                 },
-                { id: 136, name: 'C-Peptide', method: 'ECLIA', category: '면역검사',
-                  principle: 'C-펩타이드를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '호르몬', '당뇨']
+                { id: 6003, name: 'CA 15-3 II', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '유방암 (Cancer Antigen 15-3)',
+                  procedure: 'QC: CA 15-3 G2 CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '유방암']
                 },
-                { id: 137, name: 'Anti-CCP', method: 'ECLIA', category: '면역검사',
-                  principle: '항CCP 항체를 측정합니다.',
-                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '자가면역', '류마티스']
+                { id: 6004, name: 'CA 19-9', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '췌장/담도 암, 소화기암 (Cancer Antigen 19-9)',
+                  procedure: 'QC: CA 19-9 CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '췌장암', '소화기암']
                 },
-                { id: 138, name: 'IgE II', method: 'ECLIA', category: '면역검사',
-                  principle: '총 IgE를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '알레르기', 'IgE']
+                { id: 6005, name: 'CA 72-4', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '난소암, 위암 (Cancer Antigen 72-4)',
+                  procedure: 'QC: CA 72-4 CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '난소암', '위암']
                 },
-                
-                // Bone markers
-                { id: 150, name: 'β-CrossLaps/serum', method: 'ECLIA', category: '면역검사',
-                  principle: '베타-크로스랩스를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 6006, name: 'CEA', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '소화기계 암의 예후 판정 / 태아성암항원 (Carcinoembryonic Antigen), 대장암, 폐암, 유방암',
+                  procedure: 'QC: CEA CS\nCal: Universal / TM',
+                  tags: ['면역검사', '종양표지자', '대장암', '폐암']
+                },
+                { id: 6007, name: 'TPSA', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '전립선암-전립선특이항원 (Total Prostate Specific Antigen)',
+                  procedure: 'QC: TPSA G2 CS\nCal: Universal / TM',
+                  tags: ['면역검사', '종양표지자', '전립선암']
+                },
+                { id: 6008, name: 'FPSA', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '유리전립선특이항원, 전립선암 진단',
+                  procedure: 'QC: FPSA CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '전립선암']
+                },
+                { id: 6009, name: 'NSE', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '신경특이에놀라제 (Neuron-Specific Enolase), 소세포폐암, 신경계 세포암',
+                  procedure: 'QC: NSE CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '폐암', '신경계']
+                },
+                { id: 6010, name: 'HE4', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '난소암, 인간 부고환 단백 4 (Human Epididymis protein4)',
+                  procedure: 'QC: HE4 CS\nCal: HE4',
+                  tags: ['면역검사', '종양표지자', '난소암']
+                },
+                { id: 6011, name: 'SCC', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '편평상피세포암항원 (Squamous Cell Carcinoma)(자궁경부암, 폐편평상피암, 식도암, 비소세포폐암, 갑상선암)',
+                  procedure: 'QC: SCC CS\nCal: PC LC, PC SCC',
+                  tags: ['면역검사', '종양표지자', '편평상피암']
+                },
+                { id: 6012, name: 'proGRP', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '프로가스트린유리펩타이드검사 (pro Gastrin Releasing Peptide), 소세포폐암',
+                  procedure: 'QC: proGRP CS\nCal: PC LC, PC proGRP',
+                  tags: ['면역검사', '종양표지자', '폐암']
+                },
+                { id: 6013, name: 'Cyfra 21-1', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: 'cytokeratin 19 fragment, 폐암 진단',
+                  procedure: 'QC: Cyfra 21-1 CS\nCal: Tumor Marker',
+                  tags: ['면역검사', '종양표지자', '폐암']
+                },
+                { id: 6014, name: 'PIVKA II', subcategory: 'Tumor Marker', method: '100T', category: '면역검사',
+                  principle: '비타민K결핍유도단백 (Protein Induced by Vitamin K Absence). 비타민 K가 결핍되었을 때 생산되는 단백질(이상 프로트롬빈)로, 비타민 K결핍, 간세포암 종양표지자',
+                  procedure: 'QC: -\nCal: -',
+                  tags: ['면역검사', '종양표지자', '간암']
+                },
+
+                // Bone Marker (골대사)
+                { id: 7001, name: 'β-Crosslaps', subcategory: 'Bone Marker', method: '100T', category: '면역검사',
+                  principle: '골흡수표지자 - C-telopeptide of collagen Type 1 (CTX)',
+                  procedure: 'QC: β-Crosslaps CS\nCal: Varia',
                   tags: ['면역검사', '골대사', '골흡수']
                 },
-                { id: 151, name: 'N-MID Osteocalcin', method: 'ECLIA', category: '면역검사',
-                  principle: 'N-MID 오스테오칼신을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 7002, name: 'N-mid Osteocalcin', subcategory: 'Bone Marker', method: '100T', category: '면역검사',
+                  principle: '골형성표지자 - 오스테오칼신, 골순환 진단',
+                  procedure: 'QC: N-mid Osteocalcin CS\nCal: Varia',
                   tags: ['면역검사', '골대사', '골형성']
                 },
-                { id: 152, name: 'PTH', method: 'ECLIA', category: '면역검사',
-                  principle: '부갑상선호르몬을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '골대사', '칼슘대사']
+                { id: 7003, name: 'PTH (STAT)', subcategory: 'Bone Marker', method: '100T', category: '면역검사',
+                  principle: '부갑상선호르몬 (Parathyroid hormone)(혈중 칼슘이 표준수위보다 낮아졌을 때 분비되는 호르몬으로 직,간접적인 효과에 의해 혈중 칼슘농도를 높인다.), 골 순환 진단',
+                  procedure: 'QC: PTH (STAT) CS\nCal: Varia',
+                  tags: ['면역검사', '골대사', '호르몬', '칼슘']
                 },
-                { id: 153, name: 'PTH (1-84)', method: 'ECLIA', category: '면역검사',
-                  principle: 'Intact PTH를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '골대사', '칼슘대사']
+                { id: 7004, name: 'PTH 1-84', subcategory: 'Bone Marker', method: '100T', category: '면역검사',
+                  principle: '부갑상선호르몬',
+                  procedure: 'QC: PTH 1-84 CS\nCal: Varia',
+                  tags: ['면역검사', '골대사', '호르몬']
                 },
-                { id: 154, name: 'total P1NP', method: 'ECLIA', category: '면역검사',
-                  principle: 'Procollagen type 1 N-terminal propeptide를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                { id: 7005, name: 'Total P1NP', subcategory: 'Bone Marker', method: '100T', category: '면역검사',
+                  principle: '골형성표지자 - N-terminal propeptide of type 1 procollagen(P1NP) (Total Procollagen type 1 NTerminal Propeptide)',
+                  procedure: 'QC: Total P1NP CS\nCal: Varia',
                   tags: ['면역검사', '골대사', '골형성']
                 },
-                { id: 155, name: 'Vitamin D total III', method: 'ECLIA', category: '면역검사',
-                  principle: '총 비타민 D를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '비타민', '골대사']
+                { id: 7006, name: 'Vit D total', subcategory: 'Bone Marker', method: '100T', category: '면역검사',
+                  principle: '비타민 D, 부갑상샘기능항진증 진단',
+                  procedure: 'QC: Vit D total CS\nCal: Varia',
+                  tags: ['면역검사', '골대사', '비타민', '칼슘']
                 },
-                
-                // ISD (Immunosuppressive Drug)
-                { id: 160, name: 'Tacrolimus', method: 'ECLIA', category: '면역검사',
-                  principle: '타크로리무스 혈중 농도를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '약물모니터링', '면역억제제']
+
+                // Hormones & Others (호르몬 & 기타)
+                { id: 8001, name: 'ACTH', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '부신 피질 자극 호르몬 (Adrenocorticotropic hormone), 시상하부-뇌하수체-부신피질계 장애진단',
+                  procedure: 'QC: ACTH CS\nCal: Multimarker',
+                  tags: ['면역검사', '호르몬', '부신', '뇌하수체']
                 },
-                { id: 161, name: 'Cyclosporine', method: 'ECLIA', category: '면역검사',
-                  principle: '사이클로스포린 혈중 농도를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                { id: 8002, name: 'Cortisol II', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '부신 피질 호르몬(스트레스 호르몬)',
+                  procedure: 'QC: Cortisol II CS\nCal: Universal',
+                  tags: ['면역검사', '호르몬', '부신', '스트레스']
                 },
-                { id: 162, name: 'Sirolimus', method: 'ECLIA', category: '면역검사',
-                  principle: '시롤리무스 혈중 농도를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                { id: 8003, name: 'hGH', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '인간 성장 호르몬 측정 (human Growth Hormone)',
+                  procedure: 'QC: hGH CS\nCal: Multimarker',
+                  tags: ['면역검사', '호르몬', '성장']
                 },
-                { id: 163, name: 'Everolimus', method: 'ECLIA', category: '면역검사',
-                  principle: '에버로리무스 혈중 농도를 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                { id: 8004, name: 'IGF-1', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '↑ : 말단비대증이나 거인증, 갑상선기능항진증 / ↓ : 뇌하수체성 소인증, 영양장애, 사춘기 지연증, GH분비 부전성 저신장 (Insulin-like Growth Factor-1)',
+                  procedure: 'QC: IGF-1 CS\nCal: IGF-1',
+                  tags: ['면역검사', '호르몬', '성장']
                 },
-                
-                // Critical care
-                { id: 170, name: 'S 100', method: 'ECLIA', category: '면역검사',
-                  principle: 'S100 단백을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '응급', '뇌손상']
+                { id: 8005, name: 'IGF BP3', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '인슐린유사성장인자결합단백질3 (Insulin-like Growth Factor Binding Protein 3)',
+                  procedure: 'QC: -\nCal: -',
+                  tags: ['면역검사', '호르몬', '성장']
                 },
-                { id: 171, name: 'BRAHMS PCT', method: 'ECLIA', category: '면역검사',
-                  principle: '프로칼시토닌을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '응급', '패혈증']
+                { id: 8006, name: 'Insulin', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '당대사 관여 호르몬(당뇨병 진단)',
+                  procedure: 'QC: Insulin CS\nCal: Multimarker',
+                  tags: ['면역검사', '호르몬', '당뇨', '인슐린']
                 },
-                { id: 172, name: 'IL-6', method: 'ECLIA', category: '면역검사',
-                  principle: '인터루킨-6을 측정합니다.',
-                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
-                  tags: ['면역검사', '응급', '염증']
+                { id: 8007, name: 'C-peptide', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '인슐린 약물 치료 모니터링(당뇨병 진단)',
+                  procedure: 'QC: C-peptide CS\nCal: Multimarker',
+                  tags: ['면역검사', '호르몬', '당뇨', '모니터링']
+                },
+                { id: 8008, name: 'A-CCP', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '류마티스 관절염의 조기진단, RF검사에 비해 특이도가 뛰어남 (Anti-Cyclic Citrullinated Peptide)',
+                  procedure: 'QC: 시약내 포함\nCal: Anti-CCP',
+                  tags: ['면역검사', '자가면역', '류마티스']
+                },
+                { id: 8009, name: 'Ig E', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '총 면역 글로불린 (Immunoglobulin E), 알러지 질환의 진단, 아토피성 질환 진단',
+                  procedure: 'QC: Ig E CS\nCal: Universal',
+                  tags: ['면역검사', '면역', '알러지', '아토피']
+                },
+                { id: 8010, name: 'Syphilis', subcategory: 'Hormones & Others', method: '100T', category: '면역검사',
+                  principle: '매독 - 트레포네마 팔리듐(매독균)',
+                  procedure: 'QC: 시약내 포함\nCal: Syphilis',
+                  tags: ['면역검사', '감염', '매독']
+                },
+
+                // Critical Care (중환자 관리)
+                { id: 9001, name: 'PCT', subcategory: 'Critical Care', method: '100T', category: '면역검사',
+                  principle: '프로칼시토닌 (Procalcitonin), 패혈증 진단',
+                  procedure: 'QC: 시약내 포함\nCal: 시약 안에 포함',
+                  tags: ['면역검사', '중환자', '패혈증']
+                },
+                { id: 9002, name: 'IL 6', subcategory: 'Critical Care', method: '100T', category: '면역검사',
+                  principle: '인터루킨-6 (Interleukin 6), 급성감염초기지표, 만성감염, 신생아 패혈증 진단',
+                  procedure: 'QC: IL 6 CS\nCal: Multimarker',
+                  tags: ['면역검사', '중환자', '감염', '패혈증']
+                },
+                { id: 9003, name: 'S100', subcategory: 'Critical Care', method: '100T', category: '면역검사',
+                  principle: '뇌 손상 진단, 악성 흑색종 모니터링',
+                  procedure: 'QC: S100 CS\nCal: Universal',
+                  tags: ['면역검사', '중환자', '뇌손상', '종양']
+                },
+
+                // Torch (산전 감염)
+                { id: 10001, name: 'CMV IgG', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '거대세포바이러스(Cytomegalovirus, CMV)_IgG - 포진바이러스',
+                  procedure: 'QC: CMV IgG\nCal: CMV',
+                  tags: ['면역검사', '산전감염', 'CMV', 'IgG']
+                },
+                { id: 10002, name: 'CMV IgM', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '거대세포바이러스(Cytomegalovirus, CMV)_IgM',
+                  procedure: 'QC: CMV IgM\nCal: CMV',
+                  tags: ['면역검사', '산전감염', 'CMV', 'IgM']
+                },
+                { id: 10003, name: 'Rubella IgG', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '풍진(Rubella Virus)_IgG - 홍역이랑 비슷한 발진',
+                  procedure: 'QC: 시약내 포함\nCal: Rubella',
+                  tags: ['면역검사', '산전감염', '풍진', 'IgG']
+                },
+                { id: 10004, name: 'Rubella IgM', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '풍진(Rubella Virus)_IgM - 홍역이랑 비슷한 발진',
+                  procedure: 'QC: 시약내 포함\nCal: Rubella',
+                  tags: ['면역검사', '산전감염', '풍진', 'IgM']
+                },
+                { id: 10005, name: 'Toxo IgG', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '기생충(Toxoplasma, Toxo)_IgG',
+                  procedure: 'QC: 시약내 포함\nCal: Toxo',
+                  tags: ['면역검사', '산전감염', '톡소플라즈마', 'IgG']
+                },
+                { id: 10006, name: 'Toxo IgM', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '기생충(Toxoplasma, Toxo)_IgM',
+                  procedure: 'QC: 시약내 포함\nCal: Toxo',
+                  tags: ['면역검사', '산전감염', '톡소플라즈마', 'IgM']
+                },
+                { id: 10007, name: 'HSV-1 IgG', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '헤르페스바이러스_IgG',
+                  procedure: 'QC: HSV\nCal: HSV',
+                  tags: ['면역검사', '산전감염', '헤르페스', 'IgG']
+                },
+                { id: 10008, name: 'HSV-2 IgG', subcategory: 'Torch', method: '100T', category: '면역검사',
+                  principle: '헤르페스바이러스_IgM',
+                  procedure: 'QC: HSV\nCal: HSV',
+                  tags: ['면역검사', '산전감염', '헤르페스', 'IgG']
                 }
             ],
             blood: [
@@ -2077,11 +2156,385 @@
             }
         }
 
+        let selectedSubcategory = 'All';
+
+        function goToReagents() {
+            goToScreen('reagents-screen');
+        }
+
+        function goToRocheInfo() {
+            goToScreen('roche-info-screen');
+        }
+
+        function showRocheDetail(topic) {
+            const rocheData = {
+                company: {
+                    title: '회사 소개',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>ROCHE 소개</span>
+                            </div>
+                            <div class="section-content">
+                                로슈(Roche)는 1896년 스위스 바젤에서 설립된 세계적인 제약 및 진단 회사입니다.
+                                <br><br>
+                                <strong>주요 특징:</strong><br>
+                                • 세계 1위 진단검사 기업<br>
+                                • 130년 이상의 역사<br>
+                                • 전세계 100개국 이상 진출<br>
+                                • 혁신적인 진단 솔루션 제공
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>비전</span>
+                            </div>
+                            <div class="section-content">
+                                "Doing now what patients need next"<br>
+                                환자가 다음에 필요로 할 것을 지금 실행합니다.
+                            </div>
+                        </div>
+                    `
+                },
+                products: {
+                    title: '제품 라인업',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>Cobas 시리즈</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>Cobas 8000:</strong> 대용량 자동화 시스템<br>
+                                <strong>Cobas 6000:</strong> 중형 통합 시스템<br>
+                                <strong>Cobas e411:</strong> 면역검사 전문 장비<br>
+                                <strong>Cobas c111:</strong> 소형 화학검사 장비
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>검사 분야</span>
+                            </div>
+                            <div class="section-content">
+                                • 임상화학 (Clinical Chemistry)<br>
+                                • 면역검사 (Immunoassay)<br>
+                                • 응고검사 (Coagulation)<br>
+                                • 혈액학 (Hematology)<br>
+                                • 분자진단 (Molecular Diagnostics)
+                            </div>
+                        </div>
+                    `
+                },
+                principle: {
+                    title: '검사 원리',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>ECLIA (전기화학발광면역측정법)</span>
+                            </div>
+                            <div class="section-content">
+                                로슈의 대표적인 면역검사 방법입니다.
+                                <br><br>
+                                <strong>원리:</strong><br>
+                                1. 항원-항체 반응<br>
+                                2. 루테늄(Ruthenium) 표지자 사용<br>
+                                3. 전기화학 반응으로 발광<br>
+                                4. 발광량 측정 → 농도 계산
+                                <br><br>
+                                <strong>장점:</strong><br>
+                                • 높은 민감도<br>
+                                • 넓은 측정 범위<br>
+                                • 빠른 검사 시간<br>
+                                • 안정적인 결과
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>ISE (이온선택전극법)</span>
+                            </div>
+                            <div class="section-content">
+                                전해질 검사에 사용됩니다.
+                                <br><br>
+                                <strong>측정 항목:</strong><br>
+                                • Na (나트륨)<br>
+                                • K (칼륨)<br>
+                                • Cl (염소)<br>
+                                • Li (리튬)
+                            </div>
+                        </div>
+                    `
+                },
+                qc: {
+                    title: '품질 관리',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>QC (Quality Control)</span>
+                            </div>
+                            <div class="section-content">
+                                매일 검사 전 정도관리 물질을 측정하여 장비 상태를 확인합니다.
+                                <br><br>
+                                <strong>QC 종류:</strong><br>
+                                • Level 1 (Low): 낮은 농도<br>
+                                • Level 2 (Normal): 정상 농도<br>
+                                • Level 3 (High): 높은 농도
+                                <br><br>
+                                <strong>판정 기준:</strong><br>
+                                • Mean ± 2SD 이내: 정상<br>
+                                • Mean ± 3SD 초과: 재검<br>
+                                • Westgard Rule 적용
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>교정 (Calibration)</span>
+                            </div>
+                            <div class="section-content">
+                                정확한 측정을 위해 주기적으로 교정이 필요합니다.
+                                <br><br>
+                                <strong>교정 주기:</strong><br>
+                                • 시약 Lot 변경 시<br>
+                                • QC 결과 이상 시<br>
+                                • 장비 유지보수 후<br>
+                                • 제조사 권장 주기
+                            </div>
+                        </div>
+                    `
+                },
+                maintenance: {
+                    title: '장비 관리',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>일일 점검</span>
+                            </div>
+                            <div class="section-content">
+                                • 시약 및 소모품 확인<br>
+                                • QC 실시<br>
+                                • 장비 청소<br>
+                                • 폐기물 처리<br>
+                                • 에러 로그 확인
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>주간 점검</span>
+                            </div>
+                            <div class="section-content">
+                                • 워터 시스템 점검<br>
+                                • ISE 모듈 세척<br>
+                                • 샘플 프로브 세척<br>
+                                • 시약 재고 관리
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">○</span>
+                                <span>월간 점검</span>
+                            </div>
+                            <div class="section-content">
+                                • 전체 시스템 청소<br>
+                                • 펌프 및 밸브 점검<br>
+                                • 예방 정비 (PM)<br>
+                                • 교정 상태 확인
+                            </div>
+                        </div>
+                    `
+                },
+                troubleshooting: {
+                    title: '문제 해결',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>QC 실패 시</span>
+                            </div>
+                            <div class="section-content">
+                                1. QC 물질 재확인 (유효기간, 보관상태)<br>
+                                2. QC 재실시<br>
+                                3. 시약 상태 확인<br>
+                                4. 교정 상태 확인<br>
+                                5. 필요시 재교정<br>
+                                6. 엔지니어 연락
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>장비 에러 발생 시</span>
+                            </div>
+                            <div class="section-content">
+                                1. 에러 코드 확인<br>
+                                2. 매뉴얼 참조<br>
+                                3. 장비 재부팅<br>
+                                4. 문제 지속 시 엔지니어 연락<br>
+                                5. 에러 로그 보관
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">○</span>
+                                <span>시약 문제</span>
+                            </div>
+                            <div class="section-content">
+                                • 기포 발생: 시약 교체<br>
+                                • 응집: 시약 흔들기 금지, 교체<br>
+                                • 침전: 시약 교체<br>
+                                • 변색: 즉시 교체
+                            </div>
+                        </div>
+                    `
+                },
+                sales: {
+                    title: '영업 Tips',
+                    content: `
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>고객 응대</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>첫 방문 시:</strong><br>
+                                • 회사 및 제품 소개<br>
+                                • 고객 니즈 파악<br>
+                                • 현재 사용 장비 확인<br>
+                                • 불편사항 청취
+                                <br><br>
+                                <strong>정기 방문 시:</strong><br>
+                                • 장비 사용 현황 확인<br>
+                                • 시약 재고 체크<br>
+                                • 신제품 정보 제공<br>
+                                • 관계 유지
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>제안 전략</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>로슈의 강점 강조:</strong><br>
+                                • 세계 1위 브랜드 신뢰도<br>
+                                • 높은 정확도와 재현성<br>
+                                • 빠른 AS 및 기술 지원<br>
+                                • 다양한 검사 항목<br>
+                                • 자동화 시스템
+                                <br><br>
+                                <strong>경쟁사 대비:</strong><br>
+                                • ECLIA 기술 우수성<br>
+                                • 시약 안정성<br>
+                                • 글로벌 네트워크<br>
+                                • 지속적인 R&D 투자
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">○</span>
+                                <span>주의사항</span>
+                            </div>
+                            <div class="section-content">
+                                • 과장된 표현 자제<br>
+                                • 정확한 정보 제공<br>
+                                • 약속은 반드시 지키기<br>
+                                • 고객 정보 보안 유지<br>
+                                • 경쟁사 비방 금지
+                            </div>
+                        </div>
+                    `
+                }
+            };
+
+            const data = rocheData[topic];
+            if (!data) return;
+
+            document.getElementById('roche-detail-title').textContent = data.title;
+            document.getElementById('roche-detail-content').innerHTML = data.content;
+            
+            goToScreen('roche-detail-screen');
+        }
+
         function goToCategory(categoryId, categoryName) {
             currentCategory = categoryId;
+            selectedSubcategory = 'All';
             document.getElementById('category-title').textContent = categoryName;
             
             const items = database[categoryId] || [];
+            
+            // 면역검사인 경우 서브카테고리 필터 표시
+            if (categoryId === 'immunity') {
+                const subcategories = ['All', ...new Set(items.map(item => item.subcategory).filter(Boolean))];
+                const filterContainer = document.getElementById('subcategory-filter');
+                const chipsContainer = document.getElementById('subcategory-chips');
+                
+                filterContainer.style.display = 'block';
+                chipsContainer.innerHTML = '';
+                
+                subcategories.forEach(subcat => {
+                    const chip = document.createElement('div');
+                    chip.style.cssText = `
+                        display: inline-block;
+                        padding: 8px 16px;
+                        border-radius: 20px;
+                        background: ${subcat === 'All' ? 'var(--primary)' : 'white'};
+                        color: ${subcat === 'All' ? 'white' : 'var(--gray-700)'};
+                        border: 2px solid ${subcat === 'All' ? 'var(--primary)' : 'var(--gray-300)'};
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        white-space: nowrap;
+                    `;
+                    chip.textContent = subcat === 'All' ? '전체' : subcat;
+                    chip.onclick = () => filterBySubcategory(subcat);
+                    chipsContainer.appendChild(chip);
+                });
+            } else {
+                document.getElementById('subcategory-filter').style.display = 'none';
+            }
+            
+            renderCategoryItems(items);
+            goToScreen('category-screen');
+        }
+
+        function filterBySubcategory(subcat) {
+            selectedSubcategory = subcat;
+            
+            // 칩 스타일 업데이트
+            const chips = document.querySelectorAll('#subcategory-chips > div');
+            chips.forEach(chip => {
+                const isSelected = (subcat === 'All' && chip.textContent === '전체') || 
+                                 (subcat !== 'All' && chip.textContent === subcat);
+                chip.style.background = isSelected ? 'var(--primary)' : 'white';
+                chip.style.color = isSelected ? 'white' : 'var(--gray-700)';
+                chip.style.borderColor = isSelected ? 'var(--primary)' : 'var(--gray-300)';
+            });
+            
+            // 필터링된 항목 표시
+            const items = database[currentCategory] || [];
+            const filteredItems = subcat === 'All' ? items : items.filter(item => item.subcategory === subcat);
+            renderCategoryItems(filteredItems);
+        }
+
+        function renderCategoryItems(items) {
             document.getElementById('item-count').textContent = `총 ${items.length}개`;
             
             const listContainer = document.getElementById('category-list');
@@ -2091,17 +2544,19 @@
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'list-item';
                 itemDiv.onclick = () => showDetail(item);
+                
+                // 서브카테고리가 있으면 표시
+                const subtitle = item.subcategory ? `${item.subcategory} · ${item.method}` : item.method;
+                
                 itemDiv.innerHTML = `
-                    <div>
+                    <div style="flex: 1;">
                         <div class="list-title">${item.name}</div>
-                        <div class="list-subtitle">${item.method}</div>
+                        <div class="list-subtitle">${subtitle}</div>
                     </div>
                     <div class="list-arrow">→</div>
                 `;
                 listContainer.appendChild(itemDiv);
             });
-            
-            goToScreen('category-screen');
         }
 
         function showDetail(item) {
@@ -2162,6 +2617,13 @@
                 `;
             }
             
+            // 개인 메모 불러오기 (면역검사인 경우)
+            const memos = JSON.parse(localStorage.getItem('itemMemos') || '{}');
+            const savedMemo = memos[item.id] || '';
+            
+            // 면역검사인지 확인
+            const isImmunity = item.category === '면역검사';
+            
             contentContainer.innerHTML = `
                 ${imageHtml}
                 
@@ -2173,6 +2635,114 @@
                     <div class="section-content">${item.principle.replace(/\n/g, '<br>')}</div>
                 </div>
                 
+                ${isImmunity ? `
+                <div class="detail-section">
+                    <div class="section-title">
+                        <span class="section-icon">●</span>
+                        <span>개인 메모</span>
+                    </div>
+                    <div style="margin-top: 12px;" id="memo-container-${item.id}">
+                        <!-- 읽기 모드 -->
+                        <div id="memo-view-${item.id}" style="display: ${savedMemo ? 'block' : 'none'};">
+                            <div style="
+                                padding: 12px;
+                                background: var(--gray-50);
+                                border-radius: 8px;
+                                min-height: 60px;
+                                line-height: 1.6;
+                                font-size: 14px;
+                                color: var(--gray-700);
+                                white-space: pre-wrap;
+                            ">${savedMemo || ''}</div>
+                            <button 
+                                onclick="editMemo(${item.id})"
+                                style="
+                                    margin-top: 12px;
+                                    width: 100%;
+                                    padding: 12px;
+                                    background: var(--gray-200);
+                                    color: var(--gray-700);
+                                    border: none;
+                                    border-radius: 8px;
+                                    font-size: 15px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s;
+                                "
+                                onmouseover="this.style.background='var(--gray-300)'"
+                                onmouseout="this.style.background='var(--gray-200)'"
+                            >
+                                수정
+                            </button>
+                        </div>
+                        
+                        <!-- 편집 모드 -->
+                        <div id="memo-edit-${item.id}" style="display: ${savedMemo ? 'none' : 'block'};">
+                            <textarea 
+                                id="item-memo-${item.id}" 
+                                placeholder="개인적인 메모를 작성하세요..."
+                                style="
+                                    width: 100%;
+                                    min-height: 120px;
+                                    padding: 12px;
+                                    border: 2px solid var(--gray-200);
+                                    border-radius: 8px;
+                                    font-family: inherit;
+                                    font-size: 14px;
+                                    line-height: 1.6;
+                                    resize: vertical;
+                                    transition: border-color 0.3s;
+                                "
+                                onfocus="this.style.borderColor='var(--primary)'"
+                                onblur="this.style.borderColor='var(--gray-200)'"
+                            >${savedMemo}</textarea>
+                            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                ${savedMemo ? `
+                                <button 
+                                    onclick="cancelEditMemo(${item.id})"
+                                    style="
+                                        flex: 1;
+                                        padding: 12px;
+                                        background: var(--gray-200);
+                                        color: var(--gray-700);
+                                        border: none;
+                                        border-radius: 8px;
+                                        font-size: 15px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s;
+                                    "
+                                    onmouseover="this.style.background='var(--gray-300)'"
+                                    onmouseout="this.style.background='var(--gray-200)'"
+                                >
+                                    취소
+                                </button>
+                                ` : ''}
+                                <button 
+                                    onclick="saveMemo(${item.id})"
+                                    style="
+                                        flex: ${savedMemo ? '1' : '1'};
+                                        padding: 12px;
+                                        background: var(--primary);
+                                        color: white;
+                                        border: none;
+                                        border-radius: 8px;
+                                        font-size: 15px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s;
+                                        box-shadow: var(--shadow-sm);
+                                    "
+                                    onmouseover="this.style.background='var(--primary-dark)'"
+                                    onmouseout="this.style.background='var(--primary)'"
+                                >
+                                    저장
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ` : `
                 <div class="detail-section">
                     <div class="section-title">
                         <span class="section-icon">●</span>
@@ -2180,6 +2750,7 @@
                     </div>
                     <div class="section-content">${item.procedure.replace(/\n/g, '<br>')}</div>
                 </div>
+                `}
                 
                 ${item.maintenance ? `
                 <div class="detail-section">
@@ -2212,6 +2783,70 @@
             }
             
             localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function saveMemo(itemId) {
+            const textarea = document.getElementById(`item-memo-${itemId}`);
+            if (!textarea) return;
+            
+            const memoText = textarea.value;
+            
+            // 메모 저장
+            const memos = JSON.parse(localStorage.getItem('itemMemos') || '{}');
+            memos[itemId] = memoText;
+            localStorage.setItem('itemMemos', JSON.stringify(memos));
+            
+            // 읽기 모드로 전환
+            const viewDiv = document.getElementById(`memo-view-${itemId}`);
+            const editDiv = document.getElementById(`memo-edit-${itemId}`);
+            
+            if (viewDiv && editDiv) {
+                // 읽기 모드 내용 업데이트
+                const contentDiv = viewDiv.querySelector('div');
+                if (contentDiv) {
+                    contentDiv.textContent = memoText;
+                }
+                
+                // 모드 전환
+                viewDiv.style.display = 'block';
+                editDiv.style.display = 'none';
+                
+                // 저장 완료 알림
+                alert('저장이 완료되었습니다.');
+            }
+        }
+
+        function editMemo(itemId) {
+            const viewDiv = document.getElementById(`memo-view-${itemId}`);
+            const editDiv = document.getElementById(`memo-edit-${itemId}`);
+            
+            if (viewDiv && editDiv) {
+                viewDiv.style.display = 'none';
+                editDiv.style.display = 'block';
+                
+                // textarea에 포커스
+                const textarea = document.getElementById(`item-memo-${itemId}`);
+                if (textarea) {
+                    textarea.focus();
+                }
+            }
+        }
+
+        function cancelEditMemo(itemId) {
+            const viewDiv = document.getElementById(`memo-view-${itemId}`);
+            const editDiv = document.getElementById(`memo-edit-${itemId}`);
+            const textarea = document.getElementById(`item-memo-${itemId}`);
+            
+            if (viewDiv && editDiv && textarea) {
+                // 원래 저장된 내용으로 되돌리기
+                const memos = JSON.parse(localStorage.getItem('itemMemos') || '{}');
+                const savedMemo = memos[itemId] || '';
+                textarea.value = savedMemo;
+                
+                // 읽기 모드로 전환
+                viewDiv.style.display = 'block';
+                editDiv.style.display = 'none';
+            }
         }
 
         function loadFavorites() {
@@ -2759,6 +3394,112 @@
                 console.log('삭제 취소됨');
             }
         }
+
+        // ===== 백업/복원 기능 =====
+        function showBackupMenu() {
+            const modal = document.getElementById('backup-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function hideBackupMenu() {
+            document.getElementById('backup-modal').style.display = 'none';
+        }
+
+        function downloadBackup() {
+            const backup = {
+                favorites: localStorage.getItem('favorites') || '[]',
+                memos: localStorage.getItem('itemMemos') || '{}',
+                meetings: localStorage.getItem('meetings') || '[]',
+                timestamp: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(backup, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `ivd-backup-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            alert('✅ 백업 파일이 다운로드되었습니다!');
+            hideBackupMenu();
+        }
+
+        function uploadBackup() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const backup = JSON.parse(event.target.result);
+                        
+                        // 복원 확인
+                        if (confirm('⚠️ 현재 데이터가 모두 덮어씌워집니다.\n백업 파일로 복원하시겠습니까?')) {
+                            localStorage.setItem('favorites', backup.favorites || '[]');
+                            localStorage.setItem('itemMemos', backup.memos || '{}');
+                            localStorage.setItem('meetings', backup.meetings || '[]');
+                            
+                            alert('✅ 백업이 복원되었습니다!\n페이지를 새로고침합니다.');
+                            location.reload();
+                        }
+                    } catch (error) {
+                        alert('❌ 백업 파일을 읽을 수 없습니다.\n올바른 백업 파일인지 확인해주세요.');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ 경고!\n모든 데이터(즐겨찾기, 메모, 회의록)가 삭제됩니다.\n정말 삭제하시겠습니까?')) {
+                if (confirm('⚠️ 정말 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
+                    localStorage.removeItem('favorites');
+                    localStorage.removeItem('itemMemos');
+                    localStorage.removeItem('meetings');
+                    alert('✅ 모든 데이터가 삭제되었습니다.');
+                    location.reload();
+                }
+            }
+        }
     </script>
+
+    <!-- 백업 메뉴 모달 -->
+    <div id="backup-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; border-radius: 20px; padding: 30px; max-width: 340px; margin: 20px; box-shadow: var(--shadow-xl);">
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <span style="font-size: 32px;">💾</span>
+                </div>
+                <h3 style="color: var(--gray-900); font-size: 20px; font-weight: 700; margin-bottom: 8px;">데이터 백업</h3>
+                <p style="color: var(--gray-600); font-size: 14px; line-height: 1.6;">즐겨찾기, 메모, 회의록을 안전하게 보관하세요</p>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button onclick="downloadBackup()" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);">
+                    📥 백업 다운로드
+                </button>
+                <button onclick="uploadBackup()" style="width: 100%; padding: 14px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);">
+                    📤 백업 복원
+                </button>
+                <button onclick="clearAllData()" style="width: 100%; padding: 14px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);">
+                    🗑️ 전체 삭제
+                </button>
+                <button onclick="hideBackupMenu()" style="width: 100%; padding: 14px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

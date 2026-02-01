@@ -142,8 +142,9 @@
         }
         
         .search-icon {
+            width: 20px;
+            height: 20px;
             color: var(--gray-400);
-            font-size: 18px;
         }
         
         .search-bar input {
@@ -372,15 +373,15 @@
         
         .favorite-button {
             background: white;
-            border: 2px solid var(--danger);
-            color: var(--danger);
+            border: 2px solid #fbbf24;
+            color: #fbbf24;
             width: 44px;
             height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow-md);
@@ -397,7 +398,7 @@
         }
         
         .favorite-button.active {
-            background: var(--danger);
+            background: #fbbf24;
             color: white;
         }
         
@@ -651,14 +652,14 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <h1 style="margin: 0;">그랜드 메드랩</h1>
                     <button onclick="showBackupMenu()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                        💾 백업
+                        백업
                     </button>
                 </div>
                 <p>영업사원을 위한 학습 플랫폼</p>
             </div>
             
             <div class="search-bar" onclick="goToScreen('search-screen')">
-                <span class="search-icon"></span>
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
                 <span style="color: var(--gray-400);">시약, 장비, 검사명 검색...</span>
             </div>
             
@@ -668,7 +669,6 @@
                     <!-- 시약 정보 -->
                     <div class="category-card" onclick="goToReagents()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
                         <div style="display: flex; align-items: center; gap: 20px;">
-                            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; flex-shrink: 0;">R</div>
                             <div style="flex: 1;">
                                 <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">시약 정보</div>
                                 <div style="color: rgba(255,255,255,0.8); font-size: 14px;">화학검사 · 면역검사 · 혈액검사</div>
@@ -679,24 +679,22 @@
                     </div>
 
                     <!-- 장비 정보 -->
-                    <div class="category-card" onclick="goToCategory('equipment', '장비정보')" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
+                    <div class="category-card" onclick="goToEquipment()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
                         <div style="display: flex; align-items: center; gap: 20px;">
-                            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; flex-shrink: 0;">E</div>
                             <div style="flex: 1;">
                                 <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">장비 정보</div>
-                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">ROCHE 장비 사양 및 관리</div>
-                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">총 16개 항목</div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">제조사별 장비 사양 및 관리</div>
+                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">ROCHE · Siemens · Abbott</div>
                             </div>
                             <div style="color: white; font-size: 24px;">→</div>
                         </div>
                     </div>
 
-                    <!-- 로슈 기본정보 -->
+                    <!-- 기본 교육 게시판 -->
                     <div class="category-card" onclick="goToRocheInfo()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
                         <div style="display: flex; align-items: center; gap: 20px;">
-                            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; flex-shrink: 0;">ⓡ</div>
                             <div style="flex: 1;">
-                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">로슈 기본정보</div>
+                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">기본 교육 게시판</div>
                                 <div style="color: rgba(255,255,255,0.8); font-size: 14px;">회사소개 · 제품 · 영업 가이드</div>
                                 <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">영업사원 필독</div>
                             </div>
@@ -737,16 +735,54 @@
             </div>
         </div>
         
-        <!-- 로슈 기본정보 화면 -->
+        <!-- 장비 회사 선택 화면 -->
+        <div class="screen" id="equipment-screen">
+            <div class="back-button" onclick="goToScreen('home-screen')">←</div>
+            
+            <div class="header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <h1>장비 정보</h1>
+                <p>제조사를 선택하세요</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px;">
+                <div class="category-grid">
+                    <div class="category-card" onclick="goToCategory('equipment', 'ROCHE 장비')">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 20px; font-weight: 700;">ROCHE</div>
+                        <div class="category-name">ROCHE</div>
+                        <div class="category-count">16개 장비</div>
+                    </div>
+                    <div class="category-card" style="opacity: 0.5; cursor: not-allowed;">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 16px; font-weight: 700;">Siemens</div>
+                        <div class="category-name">Siemens</div>
+                        <div class="category-count">준비 중</div>
+                    </div>
+                    <div class="category-card" style="opacity: 0.5; cursor: not-allowed;">
+                        <div class="category-icon" style="background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 18px; font-weight: 700;">Abbott</div>
+                        <div class="category-name">Abbott</div>
+                        <div class="category-count">준비 중</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 기본 교육 게시판 화면 -->
         <div class="screen" id="roche-info-screen">
             <div class="back-button" onclick="goToScreen('home-screen')">←</div>
             
             <div class="header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                <h1>로슈 기본정보</h1>
+                <h1>기본 교육 게시판</h1>
                 <p>영업사원을 위한 필수 학습 자료</p>
             </div>
             
-            <div class="list-container" style="padding-bottom: 100px;">
+            <div class="list-container" style="padding: 20px 0 100px 0;">
+                <div class="list-item" onclick="showRocheDetail('packComparison')">
+                    <div style="flex: 1;">
+                        <div class="list-title">Small Pack vs Large Pack vs Green Pack 이란?</div>
+                        <div class="list-subtitle">시약 팩 종류별 특성 비교 및 장비 호환성</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                </div>
+                
                 <div class="list-item" onclick="showRocheDetail('company')">
                     <div style="flex: 1;">
                         <div class="list-title">회사 소개</div>
@@ -835,11 +871,11 @@
             </div>
             
             <div class="search-bar">
-                <span class="search-icon"></span>
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
                 <input type="text" placeholder="시약 검색..." id="category-search">
             </div>
             
-            <div class="list-container" id="category-list">
+            <div class="list-container" id="category-list" style="padding-top: 12px;">
                 <!-- JavaScript로 동적 생성 -->
             </div>
         </div>
@@ -848,7 +884,7 @@
         <div class="screen" id="detail-screen">
             <div class="detail-header">
                 <div class="back-button" onclick="goBack()">←</div>
-                <div class="favorite-button" id="favorite-btn" onclick="toggleFavorite()">♡</div>
+                <div class="favorite-button" id="favorite-btn" onclick="toggleFavorite()"></div>
             </div>
             
             <div class="breadcrumb" id="detail-breadcrumb">
@@ -883,7 +919,7 @@
                 <input type="text" placeholder="시약, 장비, 검사명 검색..." id="main-search" style="width: 100%;">
             </div>
             
-            <div class="list-container" id="search-results">
+            <div class="list-container" id="search-results" style="padding-top: 12px;">
                 <div class="empty-state">
                     <h3>검색어를 입력하세요</h3>
                     <p>시약명, 장비명, 검사명으로 검색할 수 있습니다</p>
@@ -894,14 +930,14 @@
         <!-- 즐겨찾기 화면 -->
         <div class="screen" id="favorites-screen">
             <div class="header">
-                <h1>★ 즐겨찾기</h1>
+                <h1> 즐겨찾기</h1>
                 <p id="favorites-count">자주 보는 항목 (0개)</p>
             </div>
             
-            <div class="list-container" id="favorites-list">
+            <div class="list-container" id="favorites-list" style="padding-top: 12px;">
                 <div class="empty-state">
                     <h3>즐겨찾기가 비어있습니다</h3>
-                    <p>상세 페이지에서 ♥ 버튼을 눌러 추가하세요</p>
+                    <p>상세 페이지에서  버튼을 눌러 추가하세요</p>
                 </div>
             </div>
         </div>
@@ -1031,7 +1067,7 @@
                 </div>
                 
                 <div style="margin-top: 16px; padding: 15px; background: #e8f5e9; border-radius: 12px; font-size: 13px; color: #2e7d32; line-height: 1.6;">
-                    <strong>💡 이용 안내</strong><br>
+                    <strong>이용 안내</strong><br>
                     • 구글 드라이브 앱에서 파일을 올리면 여기서 즉시 보입니다.<br>
                     • 리스트에서 파일명을 누르면 바로 내용을 확인할 수 있습니다.
                 </div>
@@ -1041,19 +1077,19 @@
         <!-- 하단 네비게이션 -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchNav('home-screen', 0)">
-                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">⌂</div>
+                <div class="nav-icon">⌂</div>
                 <div class="nav-label">홈</div>
             </div>
             <div class="nav-item" onclick="switchNav('search-screen', 1)">
-                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">⚲</div>
+                <div class="nav-icon">⚲</div>
                 <div class="nav-label">검색</div>
             </div>
             <div class="nav-item" onclick="switchNav('meeting-screen', 2)">
-                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">☰</div>
+                <div class="nav-icon">☰</div>
                 <div class="nav-label">회의록</div>
             </div>
             <div class="nav-item" onclick="switchNav('favorites-screen', 3)">
-                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">★</div>
+                <div class="nav-icon">★</div>
                 <div class="nav-label">즐겨찾기</div>
             </div>
         </div>
@@ -2162,12 +2198,259 @@
             goToScreen('reagents-screen');
         }
 
+        function goToEquipment() {
+            goToScreen('equipment-screen');
+        }
+
         function goToRocheInfo() {
             goToScreen('roche-info-screen');
         }
 
         function showRocheDetail(topic) {
             const rocheData = {
+                packComparison: {
+                    title: 'Small Pack vs Large Pack vs Green Pack 이란?',
+                    content: `
+                        <!-- 사진 공간 -->
+                        <div class="image-placeholder" style="margin-bottom: 24px;">
+                            <div style="text-align: center; padding: 60px 20px; background: var(--gray-100); border-radius: 16px;">
+                                <div style="font-weight: 600; font-size: 16px; color: var(--gray-700); margin-bottom: 10px;">이미지 공간</div>
+                                <div style="color: var(--gray-600); font-size: 14px;">시약 팩 비교 이미지</div>
+                                <div style="color: var(--gray-500); font-size: 12px; margin-top: 4px;">(이미지를 추가하세요)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>개요</span>
+                            </div>
+                            <div class="section-content">
+                                로슈 진단에서 공급하는 시약 팩은 검사실의 규모와 검사 빈도에 따라 3가지 타입으로 구분됩니다.
+                                각 시약 팩은 특정 장비와 호환되며, 검사실 환경에 최적화된 솔루션을 제공합니다.
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>1. C PACK Small (스몰 팩)</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>대상:</strong> 중소규모 검사실<br>
+                                <strong>호환 장비:</strong> cobas c 311, cobas c 501<br>
+                                <strong>용량:</strong> 약 100 Tests<br>
+                                <br>
+                                <strong>주요 특징:</strong><br>
+                                • 검사 빈도가 낮은 항목에 최적화<br>
+                                • 공간 효율성이 좋아 시약 냉장고 보관 용이<br>
+                                • 수동으로 캡을 제거한 후 장비 장착<br>
+                                • 중소병원 및 로컬 병원에 적합<br>
+                                <br>
+                                <strong>장점:</strong><br>
+                                - 초기 투자 비용 저렴<br>
+                                - 시약 낭비 최소화<br>
+                                - 다양한 항목 운영 가능
+                            </div>
+                        </div>
+                        
+                        <!-- 사진 공간 -->
+                        <div class="image-placeholder" style="margin: 24px 0;">
+                            <div style="text-align: center; padding: 40px 20px; background: var(--gray-100); border-radius: 16px;">
+                                <div style="font-weight: 600; font-size: 16px; color: var(--gray-700); margin-bottom: 8px;">이미지 공간</div>
+                                <div style="color: var(--gray-600); font-size: 13px;">Small Pack 이미지</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>2. C PACK Large (라지 팩)</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>대상:</strong> 대형 병원 및 수탁 검사기관<br>
+                                <strong>호환 장비:</strong> cobas c 702<br>
+                                <strong>용량:</strong> 200~300+ Tests<br>
+                                <br>
+                                <strong>주요 특징:</strong><br>
+                                • 대용량 패키지로 시약 교체 주기 연장<br>
+                                • 검사 중단 시간 최소화<br>
+                                • 운영 효율 극대화<br>
+                                • 대형 병원 및 수탁기관 전용<br>
+                                <br>
+                                <strong>장점:</strong><br>
+                                - 검사 단가(Cost per Test) 절감 효과 큼<br>
+                                - 높은 검사량 처리 가능<br>
+                                - 시약 교체 빈도 감소
+                            </div>
+                        </div>
+                        
+                        <!-- 사진 공간 -->
+                        <div class="image-placeholder" style="margin: 24px 0;">
+                            <div style="text-align: center; padding: 40px 20px; background: var(--gray-100); border-radius: 16px;">
+                                <div style="font-weight: 600; font-size: 16px; color: var(--gray-700); margin-bottom: 8px;">이미지 공간</div>
+                                <div style="color: var(--gray-600); font-size: 13px;">Large Pack 이미지</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>3. C PACK Green (그린 팩) - 차세대 스마트 팩</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>대상:</strong> 최신 장비 도입 검사실<br>
+                                <strong>호환 장비:</strong> cobas c 503, cobas c 303 (cobas pro/pure 시스템)<br>
+                                <strong>용량:</strong> 항목별 상이<br>
+                                <br>
+                                <strong>혁신 기술:</strong><br>
+                                <br>
+                                <strong>1) Ready-to-use (즉시 사용)</strong><br>
+                                • 수동 개봉 불필요<br>
+                                • 자동 피어싱(Auto-piercing) 기술 적용<br>
+                                • 인력 운영 효율 극대화<br>
+                                <br>
+                                <strong>2) On-board Stability (장비 내 안정성)</strong><br>
+                                • 장비 내 안정성 대폭 향상<br>
+                                • 폐기되는 시약 낭비 최소화<br>
+                                • 장시간 보관 가능<br>
+                                <br>
+                                <strong>3) 친환경 설계</strong><br>
+                                • 플라스틱 사용량 감소<br>
+                                • 폐기물 발생 최소화<br>
+                                • 지속가능한 솔루션<br>
+                                <br>
+                                <strong>최적 환경:</strong><br>
+                                - 중소규모 병원의 최신 장비 도입 시<br>
+                                - 인력 운영 효율이 중요한 경우<br>
+                                - 친환경 경영을 추구하는 기관
+                            </div>
+                        </div>
+                        
+                        <!-- 사진 공간 -->
+                        <div class="image-placeholder" style="margin: 24px 0;">
+                            <div style="text-align: center; padding: 40px 20px; background: var(--gray-100); border-radius: 16px;">
+                                <div style="font-weight: 600; font-size: 16px; color: var(--gray-700); margin-bottom: 8px;">이미지 공간</div>
+                                <div style="color: var(--gray-600); font-size: 13px;">Green Pack 이미지</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>면역 시약 패키지 비교 (E1G vs E2G)</span>
+                            </div>
+                            <div class="section-content">
+                                면역 분석(ECLIA)용 시약은 장비 세대에 따라 2가지 타입으로 구분됩니다.
+                                <br><br>
+                                <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+                                    <thead>
+                                        <tr style="background: var(--gray-100);">
+                                            <th style="padding: 12px; border: 1px solid var(--gray-300); text-align: left;">구분</th>
+                                            <th style="padding: 12px; border: 1px solid var(--gray-300); text-align: left;">E1G (Standard)</th>
+                                            <th style="padding: 12px; border: 1px solid var(--gray-300); text-align: left;">E2G (Advanced)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);"><strong>패키지 색상</strong></td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">화이트(White) 라벨</td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">그린(Green) 라벨</td>
+                                        </tr>
+                                        <tr style="background: var(--gray-50);">
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);"><strong>기본 구성</strong></td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">100 Tests</td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">300 Tests (항목별 상이)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);"><strong>대응 장비</strong></td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">cobas e 411, e 601</td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">cobas e 801, e 402</td>
+                                        </tr>
+                                        <tr style="background: var(--gray-50);">
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);"><strong>특징</strong></td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">검증된 안정성 및 범용성</td>
+                                            <td style="padding: 10px; border: 1px solid var(--gray-300);">고속 처리를 위한 대용량 설계</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- 사진 공간 -->
+                        <div class="image-placeholder" style="margin: 24px 0;">
+                            <div style="text-align: center; padding: 40px 20px; background: var(--gray-100); border-radius: 16px;">
+                                <div style="font-weight: 600; font-size: 16px; color: var(--gray-700); margin-bottom: 8px;">이미지 공간</div>
+                                <div style="color: var(--gray-600); font-size: 13px;">E1G vs E2G 비교 이미지</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>통합 시스템 장비 구성</span>
+                            </div>
+                            <div class="section-content">
+                                생화학(c) 모듈과 면역(e) 모듈이 결합된 통합 시스템 구성:
+                                <br><br>
+                                <strong>cobas 4000 시리즈:</strong> (중소규모 최적화)<br>
+                                • e411 + c311<br>
+                                <br>
+                                <strong>cobas 6000 시리즈:</strong> (중대형 병원 표준)<br>
+                                • e601 + c501<br>
+                                <br>
+                                <strong>cobas 8000 시리즈:</strong> (초대형 병원 및 수탁기관)<br>
+                                • e801 + c702<br>
+                                <br>
+                                <strong>cobas pro:</strong> (Next Gen - 최신 자동화)<br>
+                                • c503 + e801<br>
+                                <br>
+                                <strong>cobas pure:</strong> (Next Gen - 컴팩트 차세대)<br>
+                                • c303 + e402
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">■</span>
+                                <span>검사실 규모별 최적 솔루션</span>
+                            </div>
+                            <div class="section-content">
+                                <strong>중소규모 병원 (로컬 병원)</strong><br>
+                                • <strong>권장:</strong> Small Pack + cobas pure (Green Pack)<br>
+                                • <strong>이유:</strong> 운영 편의성, 공간 효율, 인력 운영 효율 극대화<br>
+                                <br>
+                                <strong>중대형 병원 (종합 병원)</strong><br>
+                                • <strong>권장:</strong> E1G + E2G 혼합 운영<br>
+                                • <strong>이유:</strong> 검사 건수에 따른 재고 회전율 최적화<br>
+                                <br>
+                                <strong>대형병원 및 수탁기관</strong><br>
+                                • <strong>권장:</strong> Large Pack (cobas c 702) + E2G<br>
+                                • <strong>이유:</strong> 검사 단가 경쟁력, 높은 검사량 처리
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <div class="section-title">
+                                <span class="section-icon">●</span>
+                                <span>결론</span>
+                            </div>
+                            <div class="section-content">
+                                시약 팩의 선택은 단순히 용량의 차이를 넘어 검사실의 장비 환경과 워크플로우를 결정하는 핵심 요소입니다.
+                                <br><br>
+                                <strong>그랜드메드랩</strong>은 고객사의 검사 유량과 항목을 분석하여 가장 경제적이고 효율적인 시약 공급 및 장비 컨설팅을 제공하고 있습니다.
+                                <br><br>
+                                <div style="padding: 16px; background: var(--gray-100); border-radius: 8px; margin-top: 12px;">
+                                    <strong>문의:</strong><br>
+                                    (주)그랜드메드랩<br>
+                                    대전광역시 대덕구 대화로 160, 11동 103호<br>
+                                    전화: 042-624-2202~4<br>
+                                    이메일: grandmedlab2202@hanmail.net
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
                 company: {
                     title: '회사 소개',
                     content: `
@@ -2583,10 +2866,10 @@
             const favBtn = document.getElementById('favorite-btn');
             if (favorites.some(f => f.id === item.id)) {
                 favBtn.classList.add('active');
-                favBtn.textContent = '♥';
+                favBtn.textContent = '★';
             } else {
                 favBtn.classList.remove('active');
-                favBtn.textContent = '♡';
+                favBtn.textContent = '☆';
             }
             
             const contentContainer = document.getElementById('detail-content');
@@ -2775,11 +3058,11 @@
             if (index > -1) {
                 favorites.splice(index, 1);
                 favBtn.classList.remove('active');
-                favBtn.textContent = '♡';
+                favBtn.textContent = '☆';
             } else {
                 favorites.push(currentItem);
                 favBtn.classList.add('active');
-                favBtn.textContent = '♥';
+                favBtn.textContent = '★';
             }
             
             localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -2858,7 +3141,7 @@
                     <div class="empty-state">
                         
                         <h3>즐겨찾기가 비어있습니다</h3>
-                        <p>상세 페이지에서 ♥ 버튼을 눌러 추가하세요</p>
+                        <p>상세 페이지에서  버튼을 눌러 추가하세요</p>
                     </div>
                 `;
                 return;
@@ -2874,7 +3157,7 @@
                         <div class="list-title">${item.name}</div>
                         <div class="list-subtitle">${item.category}</div>
                     </div>
-                    <div style="color: var(--danger); font-size: 20px;">♥</div>
+                    <div style="color: var(--danger); font-size: 20px;"></div>
                 `;
                 listContainer.appendChild(itemDiv);
             });
@@ -3113,10 +3396,10 @@
                 const feedbackText = document.getElementById('feedback-text');
                 
                 if (index === question.correct) {
-                    feedbackTitle.textContent = '✅ 정답입니다!';
+                    feedbackTitle.textContent = ' 정답입니다!';
                     feedbackTitle.style.color = 'var(--success)';
                 } else {
-                    feedbackTitle.textContent = '❌ 틀렸습니다';
+                    feedbackTitle.textContent = ' 틀렸습니다';
                     feedbackTitle.style.color = 'var(--danger)';
                 }
                 
@@ -3425,7 +3708,7 @@
             link.click();
             URL.revokeObjectURL(url);
             
-            alert('✅ 백업 파일이 다운로드되었습니다!');
+            alert(' 백업 파일이 다운로드되었습니다!');
             hideBackupMenu();
         }
 
@@ -3443,16 +3726,16 @@
                         const backup = JSON.parse(event.target.result);
                         
                         // 복원 확인
-                        if (confirm('⚠️ 현재 데이터가 모두 덮어씌워집니다.\n백업 파일로 복원하시겠습니까?')) {
+                        if (confirm(' 현재 데이터가 모두 덮어씌워집니다.\n백업 파일로 복원하시겠습니까?')) {
                             localStorage.setItem('favorites', backup.favorites || '[]');
                             localStorage.setItem('itemMemos', backup.memos || '{}');
                             localStorage.setItem('meetings', backup.meetings || '[]');
                             
-                            alert('✅ 백업이 복원되었습니다!\n페이지를 새로고침합니다.');
+                            alert(' 백업이 복원되었습니다!\n페이지를 새로고침합니다.');
                             location.reload();
                         }
                     } catch (error) {
-                        alert('❌ 백업 파일을 읽을 수 없습니다.\n올바른 백업 파일인지 확인해주세요.');
+                        alert(' 백업 파일을 읽을 수 없습니다.\n올바른 백업 파일인지 확인해주세요.');
                     }
                 };
                 reader.readAsText(file);
@@ -3461,12 +3744,12 @@
         }
 
         function clearAllData() {
-            if (confirm('⚠️ 경고!\n모든 데이터(즐겨찾기, 메모, 회의록)가 삭제됩니다.\n정말 삭제하시겠습니까?')) {
-                if (confirm('⚠️ 정말 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
+            if (confirm(' 경고!\n모든 데이터(즐겨찾기, 메모, 회의록)가 삭제됩니다.\n정말 삭제하시겠습니까?')) {
+                if (confirm(' 정말 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
                     localStorage.removeItem('favorites');
                     localStorage.removeItem('itemMemos');
                     localStorage.removeItem('meetings');
-                    alert('✅ 모든 데이터가 삭제되었습니다.');
+                    alert(' 모든 데이터가 삭제되었습니다.');
                     location.reload();
                 }
             }
@@ -3478,7 +3761,7 @@
         <div style="background: white; border-radius: 20px; padding: 30px; max-width: 340px; margin: 20px; box-shadow: var(--shadow-xl);">
             <div style="text-align: center; margin-bottom: 24px;">
                 <div style="width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-                    <span style="font-size: 32px;">💾</span>
+                    <span style="font-size: 32px;"></span>
                 </div>
                 <h3 style="color: var(--gray-900); font-size: 20px; font-weight: 700; margin-bottom: 8px;">데이터 백업</h3>
                 <p style="color: var(--gray-600); font-size: 14px; line-height: 1.6;">즐겨찾기, 메모, 회의록을 안전하게 보관하세요</p>
@@ -3486,13 +3769,13 @@
             
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <button onclick="downloadBackup()" style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);">
-                    📥 백업 다운로드
+                     백업 다운로드
                 </button>
                 <button onclick="uploadBackup()" style="width: 100%; padding: 14px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);">
-                    📤 백업 복원
+                     백업 복원
                 </button>
                 <button onclick="clearAllData()" style="width: 100%; padding: 14px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);">
-                    🗑️ 전체 삭제
+                     전체 삭제
                 </button>
                 <button onclick="hideBackupMenu()" style="width: 100%; padding: 14px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;">
                     취소

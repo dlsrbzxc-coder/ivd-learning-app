@@ -1,0 +1,2908 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체외진단검사 학습센터</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0891b2;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gray-50);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .phone-frame {
+            max-width: 100%;
+            margin: 0;
+            background: var(--gray-50);
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .notch {
+            display: none;
+        }
+        
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--gray-50);
+            min-height: 708px;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(10px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        .status-bar {
+            display: none;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 32px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            position: relative;
+            letter-spacing: -0.02em;
+        }
+        
+        .header p {
+            font-size: 15px;
+            opacity: 0.95;
+            font-weight: 400;
+            position: relative;
+        }
+        
+        .search-bar {
+            background: white;
+            margin: 20px 20px;
+            padding: 14px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .search-bar:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .search-bar:focus-within {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1), var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .search-icon {
+            color: var(--gray-400);
+            font-size: 18px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 15px;
+            color: var(--gray-900);
+            font-weight: 400;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 0 20px 120px 20px;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 32px 20px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .category-card:active {
+            transform: translateY(-2px);
+        }
+        
+        .category-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--gray-800);
+            letter-spacing: -0.01em;
+        }
+        
+        .category-count {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: white;
+            border-radius: 0;
+            padding: 12px 20px 20px 20px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+            border-top: 1px solid var(--gray-200);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 8px 12px;
+            border-radius: 12px;
+            min-width: 70px;
+        }
+        
+        .nav-item:hover {
+            background: var(--gray-100);
+        }
+        
+        .nav-item:active {
+            transform: scale(0.95);
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-label {
+            font-size: 11px;
+            color: var(--gray-600);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        }
+        
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+        
+        .nav-item.active .nav-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .back-button {
+            background: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0 0 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 20px;
+            color: var(--gray-700);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .back-button:hover {
+            background: var(--gray-100);
+            box-shadow: var(--shadow-lg);
+            transform: scale(1.05);
+        }
+        
+        .back-button:active {
+            transform: scale(0.95);
+        }
+        
+        .list-container {
+            padding: 0 20px 120px 20px;
+        }
+        
+        .list-item {
+            background: white;
+            border: 1px solid var(--gray-200);
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .list-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+        
+        .list-item:active {
+            transform: translateX(2px);
+        }
+        
+        .list-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--gray-900);
+            font-size: 15px;
+            letter-spacing: -0.01em;
+        }
+        
+        .list-subtitle {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 400;
+        }
+        
+        .list-arrow {
+            color: var(--gray-400);
+            font-size: 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .list-item:hover .list-arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+        
+        .detail-container {
+            padding: 0 20px 120px 20px;
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .favorite-button {
+            background: white;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-md);
+            margin-right: 20px;
+        }
+        
+        .favorite-button:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .favorite-button:active {
+            transform: scale(0.95);
+        }
+        
+        .favorite-button.active {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .breadcrumb {
+            color: var(--gray-500);
+            font-size: 13px;
+            margin-bottom: 12px;
+            padding: 0 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .detail-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            padding: 0 20px;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            padding: 0 20px;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            letter-spacing: 0.01em;
+        }
+        
+        .detail-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .detail-section:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .section-title {
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            letter-spacing: -0.01em;
+        }
+        
+        .section-icon {
+            font-size: 16px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .section-content {
+            color: var(--gray-700);
+            line-height: 1.7;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+            border-radius: 16px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            margin-bottom: 24px;
+            font-size: 48px;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .section-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            margin-bottom: 8px;
+        }
+        
+        .section-header h2 {
+            color: var(--gray-900);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .count {
+            color: var(--gray-500);
+            font-size: 14px;
+            font-weight: 500;
+            background: var(--gray-100);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--gray-500);
+        }
+        
+        .empty-state h3 {
+            color: var(--gray-700);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+        
+        .empty-state p {
+            color: var(--gray-500);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 16px 0;
+        }
+        
+        .quiz-option {
+            background: white;
+            border: 2px solid var(--gray-200);
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: var(--gray-50);
+            transform: translateX(4px);
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        }
+        
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gray-700);
+            flex-shrink: 0;
+        }
+        
+        .quiz-option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .quiz-option.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+        
+        .quiz-option.incorrect .option-letter {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .option-text {
+            flex: 1;
+            color: var(--gray-900);
+            font-weight: 500;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="notch"></div>
+        
+        <!-- 홈 화면 -->
+        <div class="screen active" id="home-screen">
+            <div class="header">
+                <h1>체외진단 학습센터</h1>
+                <p>필요한 정보를 빠르게 찾아보세요</p>
+            </div>
+            
+            <div class="search-bar" onclick="goToScreen('search-screen')">
+                <span class="search-icon"></span>
+                <span style="color: var(--gray-400);">시약, 장비, 검사명 검색...</span>
+            </div>
+            
+            <div class="category-grid">
+                <div class="category-card" onclick="goToCategory('chemistry', '화학검사')">
+                    <div class="category-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">C</div>
+                    <div class="category-name">화학검사</div>
+                    <div class="category-count">87개 항목</div>
+                </div>
+                <div class="category-card" onclick="goToCategory('immunity', '면역검사')">
+                    <div class="category-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">I</div>
+                    <div class="category-name">면역검사</div>
+                    <div class="category-count">80개 항목</div>
+                </div>
+                <div class="category-card" onclick="goToCategory('blood', '혈액검사')">
+                    <div class="category-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">B</div>
+                    <div class="category-name">혈액검사</div>
+                    <div class="category-count">2개 항목</div>
+                </div>
+                <div class="category-card" onclick="goToCategory('equipment', '장비정보')">
+                    <div class="category-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; font-weight: 700;">E</div>
+                    <div class="category-name">장비정보</div>
+                    <div class="category-count">16개 항목</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 카테고리 리스트 화면 -->
+        <div class="screen" id="category-screen">
+            <div class="back-button" onclick="goToScreen('home-screen')">←</div>
+            
+            <div class="section-header">
+                <h2 id="category-title">화학검사</h2>
+                <span class="count" id="item-count">총 24개</span>
+            </div>
+            
+            <div class="search-bar">
+                <span class="search-icon"></span>
+                <input type="text" placeholder="시약 검색..." id="category-search">
+            </div>
+            
+            <div class="list-container" id="category-list">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+        </div>
+        
+        <!-- 상세 정보 화면 -->
+        <div class="screen" id="detail-screen">
+            <div class="detail-header">
+                <div class="back-button" onclick="goBack()">←</div>
+                <div class="favorite-button" id="favorite-btn" onclick="toggleFavorite()">♡</div>
+            </div>
+            
+            <div class="breadcrumb" id="detail-breadcrumb">
+                <span>화학검사</span>
+                <span>›</span>
+                <span>Glucose</span>
+            </div>
+            
+            <div class="detail-title" id="detail-item-title">Glucose (포도당)</div>
+            
+            <div class="tags" id="detail-tags">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+            
+            <div class="detail-container" id="detail-content">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+        </div>
+        
+        <!-- 검색 화면 -->
+        <div class="screen" id="search-screen">
+            <div class="header">
+                <h1>검색</h1>
+                <p>모든 시약과 장비를 검색하세요</p>
+            </div>
+            
+            <div class="search-bar" style="background: white; border: 2px solid var(--primary);">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="시약, 장비, 검사명 검색..." id="main-search" style="width: 100%;">
+            </div>
+            
+            <div class="list-container" id="search-results">
+                <div class="empty-state">
+                    <h3>검색어를 입력하세요</h3>
+                    <p>시약명, 장비명, 검사명으로 검색할 수 있습니다</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 즐겨찾기 화면 -->
+        <div class="screen" id="favorites-screen">
+            <div class="header">
+                <h1>★ 즐겨찾기</h1>
+                <p id="favorites-count">자주 보는 항목 (0개)</p>
+            </div>
+            
+            <div class="list-container" id="favorites-list">
+                <div class="empty-state">
+                    <h3>즐겨찾기가 비어있습니다</h3>
+                    <p>상세 페이지에서 ♥ 버튼을 눌러 추가하세요</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 퀴즈 화면 -->
+        <div class="screen" id="quiz-screen">
+            <div class="header">
+                <h1>학습 퀴즈</h1>
+                <p id="quiz-progress">문제 1 / 10</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px 20px;">
+                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow-lg); margin-bottom: 20px; border: 1px solid var(--gray-200);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <span id="quiz-category" class="tag">화학검사</span>
+                        <span style="color: var(--gray-500); font-size: 14px; font-weight: 600;"> <span id="quiz-timer">00:00</span></span>
+                    </div>
+                    
+                    <h3 id="quiz-question" style="color: var(--gray-900); font-size: 18px; line-height: 1.6; font-weight: 600; margin-bottom: 24px;">
+                        Glucose 검사에 사용되는 효소법은 무엇인가요?
+                    </h3>
+                    
+                    <div id="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(0)">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">GOD-POD 효소법</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectAnswer(1)">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">CHOD-POD 효소법</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectAnswer(2)">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">UV Rate Method</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectAnswer(3)">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">Jaffe Method</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="quiz-feedback" style="display: none; background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); margin-bottom: 20px; border: 1px solid var(--gray-200);">
+                    <div style="font-weight: 600; margin-bottom: 10px; font-size: 16px;" id="feedback-title"></div>
+                    <div style="color: var(--gray-600); line-height: 1.6; font-size: 14px;" id="feedback-text"></div>
+                </div>
+                
+                <button id="quiz-next-btn" style="width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md); display: none;" onclick="nextQuestion()">
+                    다음 문제
+                </button>
+            </div>
+        </div>
+        
+        <!-- 퀴즈 결과 화면 -->
+        <div class="screen" id="quiz-result-screen">
+            <div class="header">
+                <h1>퀴즈 완료!</h1>
+                <p>수고하셨습니다</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px 20px;">
+                <div style="background: white; border-radius: 20px; padding: 32px; text-align: center; box-shadow: var(--shadow-lg); margin-bottom: 20px; border: 1px solid var(--gray-200);">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="7"></circle>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                        </svg>
+                    </div>
+                    <div style="font-size: 48px; font-weight: 700; color: var(--primary); margin-bottom: 8px;" id="final-score">8/10</div>
+                    <div style="font-size: 18px; color: var(--gray-600); margin-bottom: 24px;">정답률 <span id="final-percentage">80%</span></div>
+                    
+                    <div style="background: var(--gray-100); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: var(--gray-600);">소요 시간</span>
+                            <span style="font-weight: 600; color: var(--gray-900);" id="total-time">02:34</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--gray-600);">평균 시간</span>
+                            <span style="font-weight: 600; color: var(--gray-900);" id="avg-time">15초</span>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <div style="font-weight: 600; color: var(--gray-900); margin-bottom: 12px;">카테고리별 정답률</div>
+                        <div style="margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                <span style="font-size: 14px; color: var(--gray-600);">화학검사</span>
+                                <span style="font-size: 14px; font-weight: 600; color: var(--primary);">100%</span>
+                            </div>
+                            <div style="background: var(--gray-200); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--primary); height: 100%; width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                <span style="font-size: 14px; color: var(--gray-600);">면역검사</span>
+                                <span style="font-size: 14px; font-weight: 600; color: var(--primary);">75%</span>
+                            </div>
+                            <div style="background: var(--gray-200); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--primary); height: 100%; width: 75%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button style="width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md); margin-bottom: 12px;" onclick="restartQuiz()">
+                    다시 도전하기
+                </button>
+                
+                <button style="width: 100%; padding: 16px; background: white; color: var(--primary); border: 2px solid var(--primary); border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;" onclick="switchNav('home-screen', 0)">
+                    홈으로 돌아가기
+                </button>
+            </div>
+        </div>
+        
+        <!-- 영업부 회의록 화면 -->
+        <div class="screen" id="meeting-screen">
+            <div class="header">
+                <h1>영업부 회의록</h1>
+                <p>팀 회의 기록을 확인하세요</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="color: var(--gray-900); font-size: 18px; font-weight: 600;">회의록 목록</h3>
+                    <button style="background: var(--primary); color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);" onclick="showAddMeetingForm()">
+                        + 새 회의록
+                    </button>
+                </div>
+                
+                <div id="meeting-list">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+                
+                <div id="empty-meeting" style="display: none;" class="empty-state">
+                    
+                    <h3>등록된 회의록이 없습니다</h3>
+                    <p>새 회의록 버튼을 눌러 추가하세요</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 회의록 작성 화면 -->
+        <div class="screen" id="meeting-form-screen">
+            <div class="header">
+                <h1>회의록 등록</h1>
+                <p>구글 문서 링크를 등록하세요</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px 20px;">
+                <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200);">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">회의 제목 *</label>
+                        <input type="text" id="meeting-title" placeholder="예: 2026년 1분기 영업 전략 회의" style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">회의 날짜 *</label>
+                        <input type="date" id="meeting-date" style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">참석자</label>
+                        <input type="text" id="meeting-attendees" placeholder="예: 김팀장, 이대리, 박사원" style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">구글 문서 링크 *</label>
+                        <input type="url" id="meeting-link" placeholder="https://docs.google.com/document/d/..." style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
+                        <div style="color: var(--gray-500); font-size: 12px; margin-top: 6px;">
+                            구글 문서 → "공유" → "링크 복사" 후 붙여넣기
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button style="flex: 1; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md);" onclick="saveMeeting()">
+                            등록하기
+                        </button>
+                        <button style="flex: 1; padding: 14px; background: white; color: var(--gray-700); border: 2px solid var(--gray-300); border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;" onclick="cancelMeetingForm()">
+                            취소
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="background: var(--gray-100); border-radius: 12px; padding: 16px; margin-top: 16px; border: 1px solid var(--gray-200);">
+                    <div style="font-weight: 600; color: var(--gray-800); margin-bottom: 8px; font-size: 14px;">● 앱에서 보려면 공유 설정 필수!</div>
+                    <ol style="color: var(--gray-600); font-size: 13px; line-height: 1.8; padding-left: 20px; margin: 0;">
+                        <li>구글 문서 우측 상단 <strong>"공유"</strong> 클릭</li>
+                        <li><strong>"일반 액세스"</strong> 변경</li>
+                        <li><strong>"링크가 있는 모든 사용자"</strong> 선택</li>
+                        <li>권한: <strong>"뷰어"</strong> 또는 "편집자"</li>
+                        <li><strong>"링크 복사"</strong> → 여기에 붙여넣기</li>
+                    </ol>
+                    <div style="background: white; border-radius: 8px; padding: 12px; margin-top: 12px; border-left: 4px solid var(--primary);">
+                        <div style="font-size: 12px; color: var(--gray-700);">
+                            ▲ <strong>비공개 문서는 앱에서 볼 수 없습니다!</strong><br>
+                            반드시 위 단계대로 공유 설정을 해주세요.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 회의록 상세보기 화면 -->
+        <div class="screen" id="meeting-detail-screen">
+            <div class="header">
+                <h1>회의록 상세</h1>
+                <p>회의 내용을 확인하세요</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px 20px;">
+                <div class="back-button" style="margin: 0 0 20px 0;" onclick="goToScreen('meeting-screen')">←</div>
+                
+                <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200); margin-bottom: 16px;">
+                    <h2 id="detail-meeting-title" style="color: var(--gray-900); font-size: 20px; font-weight: 700; margin-bottom: 12px;"></h2>
+                    
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                        <div style="flex: 1;">
+                            <div style="color: var(--gray-500); font-size: 12px; margin-bottom: 4px;">날짜</div>
+                            <div id="detail-meeting-date" style="color: var(--gray-900); font-weight: 600; font-size: 13px;"></div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="color: var(--gray-500); font-size: 12px; margin-bottom: 4px;">참석자</div>
+                            <div id="detail-meeting-attendees" style="color: var(--gray-900); font-weight: 600; font-size: 13px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; gap: 8px;">
+                            <a id="detail-meeting-link" href="#" target="_blank" style="flex: 1; display: block; background: var(--primary); color: white; text-decoration: none; padding: 10px 16px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 14px; box-shadow: var(--shadow-sm); transition: all 0.3s;">
+                                새 탭에서 열기
+                            </a>
+                            <button onclick="toggleDocView()" style="flex: 1; background: var(--secondary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: var(--shadow-sm);">
+                                <span id="toggle-btn-text">보기</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="doc-viewer-container" style="display: none; margin-top: 16px;">
+                        <div style="background: var(--gray-100); border-radius: 12px; overflow: hidden; border: 2px solid var(--gray-200);">
+                            <iframe id="doc-iframe" style="width: 100%; height: 500px; border: none; display: block;"></iframe>
+                        </div>
+                        <div style="color: var(--gray-500); font-size: 12px; text-align: center; margin-top: 8px;">
+                            스크롤하여 문서 전체를 확인할 수 있습니다
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="delete-meeting-btn" style="width: 100%; padding: 14px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md);" onclick="showDeleteConfirm()">
+                    삭제하기
+                </button>
+            </div>
+        </div>
+        
+        <!-- 삭제 확인 모달 -->
+        <div id="delete-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+            <div style="background: white; border-radius: 20px; padding: 30px; max-width: 340px; margin: 20px; box-shadow: var(--shadow-xl);">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="width: 64px; height: 64px; background: #fef2f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <h3 style="color: var(--gray-900); font-size: 20px; font-weight: 700; margin-bottom: 8px;">회의록 삭제</h3>
+                    <p id="delete-confirm-text" style="color: var(--gray-600); font-size: 14px; line-height: 1.6;"></p>
+                </div>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="hideDeleteConfirm()" style="flex: 1; padding: 14px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;">
+                        취소
+                    </button>
+                    <button onclick="confirmDelete()" style="flex: 1; padding: 14px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md);">
+                        삭제
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchNav('home-screen', 0)">
+                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">⌂</div>
+                <div class="nav-label">홈</div>
+            </div>
+            <div class="nav-item" onclick="switchNav('search-screen', 1)">
+                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">⚲</div>
+                <div class="nav-label">검색</div>
+            </div>
+            <div class="nav-item" onclick="switchNav('meeting-screen', 2)">
+                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">☰</div>
+                <div class="nav-label">회의록</div>
+            </div>
+            <div class="nav-item" onclick="switchNav('favorites-screen', 3)">
+                <div class="nav-icon" style="font-size: 20px; font-weight: 600;">★</div>
+                <div class="nav-label">즐겨찾기</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 데이터베이스
+        const database = {
+            chemistry: [
+                // Specific Proteins (특수 단백)
+                { id: 1, name: 'Albumin Serum/Plasma/Urine/CSF (ALB-T)', method: '비색법', category: '화학검사',
+                  principle: '알부민과 특정 염료가 결합하여 발색하는 원리를 이용합니다.',
+                  procedure: '1. 검체와 시약 혼합\n2. 반응 후 흡광도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '특수단백', '알부민']
+                },
+                { id: 2, name: 'Antistreptolysin O (ASLO)', method: '면역비탁법', category: '화학검사',
+                  principle: 'ASO 항체와 항원의 면역 반응으로 탁도를 측정합니다.',
+                  procedure: '1. 검체와 항원 혼합\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '특수단백', '면역']
+                },
+                { id: 3, name: 'Antithrombin (AT)', method: '비색법', category: '화학검사',
+                  principle: '안티트롬빈의 활성도를 측정합니다.',
+                  procedure: '1. 검체와 시약 반응\n2. 흡광도 측정\n3. 활성도 계산',
+                  tags: ['화학검사', '응고', '특수단백']
+                },
+                { id: 4, name: 'Apolipoprotein A-1 (APO A)', method: '면역비탁법', category: '화학검사',
+                  principle: 'Apo A-1 단백을 면역학적으로 정량합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '지질', '특수단백']
+                },
+                { id: 5, name: 'Apolipoprotein B (APO B)', method: '면역비탁법', category: '화학검사',
+                  principle: 'Apo B 단백을 면역학적으로 정량합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '지질', '특수단백']
+                },
+                { id: 6, name: 'C-Reactive Protein High Sensitive (CRPHS)', method: '면역비탁법', category: '화학검사',
+                  principle: '고감도 CRP를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '염증', '특수단백']
+                },
+                { id: 7, name: 'Ceruloplasmin (CERU)', method: '면역비탁법', category: '화학검사',
+                  principle: '세룰로플라스민을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '특수단백', '구리대사']
+                },
+                { id: 8, name: 'Complement C3c (C3)', method: '면역비탁법', category: '화학검사',
+                  principle: '보체 C3를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', '보체']
+                },
+                { id: 9, name: 'Complement C4 (C4)', method: '면역비탁법', category: '화학검사',
+                  principle: '보체 C4를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', '보체']
+                },
+                { id: 10, name: 'C-Reactive Protein (CRP)', method: '면역비탁법', category: '화학검사',
+                  principle: 'CRP를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '염증', '특수단백']
+                },
+                { id: 11, name: 'Cystatin C', method: '면역비탁법', category: '화학검사',
+                  principle: 'Cystatin C를 측정하여 신기능을 평가합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '신기능', '특수단백']
+                },
+                { id: 12, name: 'D-Dimer', method: '면역비탁법', category: '화학검사',
+                  principle: 'D-이합체를 측정하여 혈전을 평가합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '응고', '특수단백']
+                },
+                { id: 13, name: 'Haptoglobin (HAPT)', method: '면역비탁법', category: '화학검사',
+                  principle: '합토글로빈을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '특수단백', '용혈']
+                },
+                { id: 14, name: 'IgA', method: '면역비탁법', category: '화학검사',
+                  principle: '면역글로불린 A를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', '면역글로불린']
+                },
+                { id: 15, name: 'IgA CSF', method: '면역비탁법', category: '화학검사',
+                  principle: '뇌척수액의 IgA를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', 'CSF']
+                },
+                { id: 16, name: 'IgG', method: '면역비탁법', category: '화학검사',
+                  principle: '면역글로불린 G를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', '면역글로불린']
+                },
+                { id: 17, name: 'IgM', method: '면역비탁법', category: '화학검사',
+                  principle: '면역글로불린 M을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', '면역글로불린']
+                },
+                { id: 18, name: 'IgM CSF', method: '면역비탁법', category: '화학검사',
+                  principle: '뇌척수액의 IgM을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', 'CSF']
+                },
+                { id: 19, name: 'Lipoprotein (a) [LP(a)] (LPA)', method: '면역비탁법', category: '화학검사',
+                  principle: 'Lipoprotein (a)를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '지질', '특수단백']
+                },
+                { id: 20, name: 'Prealbumin (PREA)', method: '면역비탁법', category: '화학검사',
+                  principle: '프리알부민을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '특수단백', '영양']
+                },
+                { id: 21, name: 'Rheumatoid Factors II (RF)', method: '면역비탁법', category: '화학검사',
+                  principle: '류마티스 인자를 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '면역', '류마티스']
+                },
+                { id: 22, name: 'Soluble Transferrin Receptor', method: '면역비탁법', category: '화학검사',
+                  principle: '가용성 트랜스페린 수용체를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '철대사', '특수단백']
+                },
+                { id: 23, name: 'β2-Microglobulin (B2MG)', method: '면역비탁법', category: '화학검사',
+                  principle: '베타2 마이크로글로불린을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '신기능', '특수단백']
+                },
+                { id: 24, name: 'Transferrin (TRSF)', method: '면역비탁법', category: '화학검사',
+                  principle: '트랜스페린을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '철대사', '특수단백']
+                },
+                { id: 25, name: 'α1-Antitrypsin', method: '면역비탁법', category: '화학검사',
+                  principle: '알파1 안티트립신을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 탁도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '특수단백', '간기능']
+                },
+                
+                // Substrates (기질)
+                { id: 26, name: 'Albumin BCP (ALB)', method: 'BCP 비색법', category: '화학검사',
+                  principle: 'Bromocresol Purple과 알부민의 결합을 측정합니다.',
+                  procedure: '1. 검체와 BCP 시약 혼합\n2. 600nm에서 흡광도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '기질', '알부민']
+                },
+                { id: 27, name: 'Albumin BCG (ALB)', method: 'BCG 비색법', category: '화학검사',
+                  principle: 'Bromocresol Green과 알부민의 결합을 측정합니다.',
+                  procedure: '1. 검체와 BCG 시약 혼합\n2. 630nm에서 흡광도 측정\n3. 정량 분석',
+                  tags: ['화학검사', '기질', '알부민']
+                },
+                { id: 28, name: 'Ammonia (NH3L)', method: '효소법', category: '화학검사',
+                  principle: '암모니아를 효소적으로 측정합니다.',
+                  procedure: '1. GLDH 효소 반응\n2. NADH 감소 측정\n3. 340nm에서 측정',
+                  tags: ['화학검사', '간기능', '암모니아']
+                },
+                { id: 29, name: 'Bicarbonate Liquid (CO2-L)', method: '효소법', category: '화학검사',
+                  principle: '중탄산염을 측정합니다.',
+                  procedure: '1. 효소 반응\n2. NADH 생성 측정\n3. 340nm에서 측정',
+                  tags: ['화학검사', '전해질', '산염기']
+                },
+                { id: 30, name: 'Bilirubin Total (BIL-T)', method: 'DPD법', category: '화학검사',
+                  principle: '총 빌리루빈을 측정합니다.',
+                  procedure: '1. 디아조 시약 반응\n2. 아조빌리루빈 생성\n3. 546nm에서 측정',
+                  tags: ['화학검사', '간기능', '빌리루빈']
+                },
+                { id: 31, name: 'Bilirubin Direct (BIL-D)', method: 'DPD법', category: '화학검사',
+                  principle: '직접 빌리루빈을 측정합니다.',
+                  procedure: '1. 디아조 시약 반응\n2. 직접 반응 측정\n3. 546nm에서 측정',
+                  tags: ['화학검사', '간기능', '빌리루빈']
+                },
+                { id: 32, name: 'Calcium (CA)', method: 'o-CPC법', category: '화학검사',
+                  principle: '칼슘 이온을 측정합니다.',
+                  procedure: '1. o-Cresolphthalein complexone 반응\n2. 발색 복합체 형성\n3. 570nm에서 측정',
+                  tags: ['화학검사', '전해질', '칼슘']
+                },
+                { id: 33, name: 'Cholesterol (CHOL)', method: 'CHOD-POD 효소법', category: '화학검사',
+                  principle: '총 콜레스테롤을 효소법으로 측정합니다.\n\nCholesterol ester → Cholesterol + Fatty acid\nCholesterol + O₂ → Cholest-4-en-3-one + H₂O₂',
+                  procedure: '1. 시약과 검체 혼합\n2. 37°C, 5분 반응\n3. 500nm에서 흡광도 측정',
+                  tags: ['화학검사', '지질', '효소법']
+                },
+                { id: 34, name: 'Creatinine Jaffe (CREAJ)', method: 'Jaffe Method', category: '화학검사',
+                  principle: 'Jaffe 반응을 이용한 비색법입니다.\n\nCreatinine + Picric acid → Red complex (알칼리 조건)',
+                  procedure: '1. 검체와 피크르산 반응\n2. 알칼리 첨가\n3. 510nm에서 측정',
+                  tags: ['화학검사', '신기능', '비색법']
+                },
+                { id: 35, name: 'Creatinine Enzymatic (CREP)', method: '효소법', category: '화학검사',
+                  principle: '크레아티닌을 효소법으로 측정합니다.',
+                  procedure: '1. 효소 반응\n2. H₂O₂ 생성\n3. 546nm에서 측정',
+                  tags: ['화학검사', '신기능', '효소법']
+                },
+                { id: 36, name: 'Fructosamine (FRUC)', method: 'NBT법', category: '화학검사',
+                  principle: '프락토사민을 측정합니다.',
+                  procedure: '1. NBT 환원 반응\n2. 발색 측정\n3. 546nm에서 측정',
+                  tags: ['화학검사', '당뇨', '당화단백']
+                },
+                { id: 37, name: 'Glucose (GLUC)', method: 'GOD-POD 효소법', category: '화학검사',
+                  principle: 'GOD-POD 효소법을 이용한 비색정량법입니다.\n\nGlucose + O₂ → Gluconic acid + H₂O₂\nH₂O₂ + 4-AP + Phenol → Quinoneimine + H₂O',
+                  procedure: '1. 시약 준비 및 온도 평형\n2. 검체와 시약 혼합\n3. 37°C, 5분 반응\n4. 505nm에서 측정',
+                  tags: ['화학검사', '효소법', '자동분석기']
+                },
+                { id: 38, name: 'HDL-Cholesterol (HDL-C)', method: '직접법', category: '화학검사',
+                  principle: 'HDL 콜레스테롤을 직접 측정합니다.',
+                  procedure: '1. 선택적 용해\n2. 효소 반응\n3. 600nm에서 측정',
+                  tags: ['화학검사', '지질', 'HDL']
+                },
+                { id: 39, name: 'Homocysteine (HCY)', method: '효소법', category: '화학검사',
+                  principle: '호모시스테인을 측정합니다.',
+                  procedure: '1. 효소 순환 반응\n2. NADH 생성 측정\n3. 340nm에서 측정',
+                  tags: ['화학검사', '심혈관', '아미노산']
+                },
+                { id: 40, name: 'Iron (IRON)', method: 'Ferrozine법', category: '화학검사',
+                  principle: '혈청 철을 측정합니다.',
+                  procedure: '1. 철 이온 환원\n2. Ferrozine과 복합체 형성\n3. 560nm에서 측정',
+                  tags: ['화학검사', '철대사', '빈혈']
+                },
+                { id: 41, name: 'Lactate (LACT)', method: '효소법', category: '화학검사',
+                  principle: '젖산을 측정합니다.',
+                  procedure: '1. LOD 효소 반응\n2. H₂O₂ 생성\n3. 546nm에서 측정',
+                  tags: ['화학검사', '대사', '젖산']
+                },
+                { id: 42, name: 'LDL-Cholesterol (LDL-C)', method: '직접법', category: '화학검사',
+                  principle: 'LDL 콜레스테롤을 직접 측정합니다.',
+                  procedure: '1. 선택적 용해\n2. 효소 반응\n3. 600nm에서 측정',
+                  tags: ['화학검사', '지질', 'LDL']
+                },
+                { id: 43, name: 'Magnesium (MG)', method: 'Xylidyl Blue법', category: '화학검사',
+                  principle: '마그네슘을 측정합니다.',
+                  procedure: '1. Xylidyl Blue 반응\n2. 복합체 형성\n3. 600nm에서 측정',
+                  tags: ['화학검사', '전해질', '마그네슘']
+                },
+                { id: 44, name: 'Phosphate (Inorganic) (PHOS)', method: 'Phosphomolybdate법', category: '화학검사',
+                  principle: '무기 인을 측정합니다.',
+                  procedure: '1. Molybdate 반응\n2. 복합체 형성\n3. 340nm에서 측정',
+                  tags: ['화학검사', '전해질', '인']
+                },
+                { id: 45, name: 'Total Protein (TP)', method: 'Biuret법', category: '화학검사',
+                  principle: '총 단백을 측정합니다.',
+                  procedure: '1. Biuret 시약 반응\n2. 자주색 복합체 형성\n3. 546nm에서 측정',
+                  tags: ['화학검사', '단백', 'Biuret']
+                },
+                { id: 46, name: 'Total Protein Urine/CSF (TPU)', method: 'Pyrogallol Red법', category: '화학검사',
+                  principle: '소변/CSF 총 단백을 측정합니다.',
+                  procedure: '1. Pyrogallol Red 반응\n2. 복합체 형성\n3. 600nm에서 측정',
+                  tags: ['화학검사', '단백', '소변']
+                },
+                { id: 47, name: 'Triglycerides (TG)', method: 'GPO-POD 효소법', category: '화학검사',
+                  principle: '중성지방을 효소법으로 측정합니다.',
+                  procedure: '1. 리파제로 가수분해\n2. GPO-POD 반응\n3. 500nm에서 측정',
+                  tags: ['화학검사', '지질', '효소법']
+                },
+                { id: 48, name: 'Unsaturated Iron-Binding Capacity (UIBC)', method: 'Ferrozine법', category: '화학검사',
+                  principle: '불포화 철결합능을 측정합니다.',
+                  procedure: '1. 철 포화 후 측정\n2. Ferrozine 반응\n3. 560nm에서 측정',
+                  tags: ['화학검사', '철대사', 'UIBC']
+                },
+                { id: 49, name: 'Urea/BUN', method: 'Urease-GLDH법', category: '화학검사',
+                  principle: 'Urease를 이용한 효소법입니다.\n\nUrea + H₂O → 2NH₃ + CO₂',
+                  procedure: '1. Urease로 요소 분해\n2. 생성된 암모니아 측정\n3. 340nm에서 흡광도 측정',
+                  tags: ['화학검사', '신기능', '효소법']
+                },
+                { id: 50, name: 'Uric Acid (UA)', method: 'Uricase법', category: '화학검사',
+                  principle: '요산을 효소법으로 측정합니다.',
+                  procedure: '1. Uricase 반응\n2. H₂O₂ 생성\n3. 546nm에서 측정',
+                  tags: ['화학검사', '통풍', '요산']
+                },
+                
+                // Enzymes (효소)
+                { id: 51, name: 'Alanine Aminotransferase (ALTP)', method: 'UV Rate Method', category: '화학검사',
+                  principle: 'UV 속도법을 이용한 효소 활성도 측정입니다.\n\nL-Alanine + α-Ketoglutarate ⇄ Pyruvate + L-Glutamate',
+                  procedure: '1. 검체와 기질 혼합\n2. 37°C에서 연속 측정\n3. 340nm에서 흡광도 변화 측정',
+                  tags: ['화학검사', '효소', '간기능']
+                },
+                { id: 52, name: 'Alkaline Phosphatase (ALP)', method: 'IFCC법', category: '화학검사',
+                  principle: 'ALP 활성도를 측정합니다.',
+                  procedure: '1. p-Nitrophenyl phosphate 기질\n2. 효소 반응\n3. 405nm에서 측정',
+                  tags: ['화학검사', '효소', '간기능']
+                },
+                { id: 53, name: 'Aspartate Aminotransferase (ASTP)', method: 'UV Rate Method', category: '화학검사',
+                  principle: 'UV 속도법을 이용한 효소 활성도 측정입니다.\n\nL-Aspartate + α-Ketoglutarate ⇄ Oxaloacetate + L-Glutamate',
+                  procedure: '1. 검체와 기질 혼합\n2. 37°C에서 연속 측정\n3. 340nm에서 흡광도 변화 측정',
+                  tags: ['화학검사', '효소', '간기능']
+                },
+                { id: 54, name: 'Cholinesterase (butyryl) (CHE)', method: 'Butyrylthiocholine법', category: '화학검사',
+                  principle: '콜린에스터라제 활성도를 측정합니다.',
+                  procedure: '1. 기질 가수분해\n2. 티오콜린 생성\n3. 405nm에서 측정',
+                  tags: ['화학검사', '효소', '간기능']
+                },
+                { id: 55, name: 'Creatine Kinase (CK)', method: 'IFCC법', category: '화학검사',
+                  principle: 'CK 활성도를 측정합니다.',
+                  procedure: '1. 역반응 이용\n2. NADPH 생성 측정\n3. 340nm에서 측정',
+                  tags: ['화학검사', '효소', '심장']
+                },
+                { id: 56, name: 'Creatine Kinase-MB (CK-MB)', method: '면역억제법', category: '화학검사',
+                  principle: 'CK-MB 동위효소를 측정합니다.',
+                  procedure: '1. M subunit 억제\n2. B subunit 활성 측정\n3. 340nm에서 측정',
+                  tags: ['화학검사', '효소', '심근경색']
+                },
+                { id: 57, name: 'Lactate Dehydrogenase acc. to IFCC (LDH)', method: 'IFCC법', category: '화학검사',
+                  principle: 'LDH 활성도를 측정합니다.',
+                  procedure: '1. Lactate → Pyruvate\n2. NADH 산화\n3. 340nm에서 측정',
+                  tags: ['화학검사', '효소', '조직손상']
+                },
+                { id: 58, name: 'Lipase Colorimetric (LIPC)', method: '비색법', category: '화학검사',
+                  principle: '리파제 활성도를 측정합니다.',
+                  procedure: '1. 기질 가수분해\n2. 발색 반응\n3. 580nm에서 측정',
+                  tags: ['화학검사', '효소', '췌장']
+                },
+                { id: 59, name: 'α-Amylase Pancreatic', method: '면역억제법', category: '화학검사',
+                  principle: '췌장 아밀라제를 측정합니다.',
+                  procedure: '1. 타액 아밀라제 억제\n2. 췌장 아밀라제 측정\n3. 405nm에서 측정',
+                  tags: ['화학검사', '효소', '췌장']
+                },
+                { id: 60, name: 'α-Amylase (AMYL)', method: 'IFCC법', category: '화학검사',
+                  principle: '총 아밀라제 활성도를 측정합니다.',
+                  procedure: '1. 기질 분해\n2. 생성물 측정\n3. 405nm에서 측정',
+                  tags: ['화학검사', '효소', '췌장']
+                },
+                { id: 61, name: 'γ-Glutamyltransferase (GGT)', method: 'IFCC법', category: '화학검사',
+                  principle: 'GGT 활성도를 측정합니다.',
+                  procedure: '1. γ-Glutamyl 전이 반응\n2. 5-Amino-2-nitrobenzoate 생성\n3. 405nm에서 측정',
+                  tags: ['화학검사', '효소', '간기능']
+                },
+                
+                // Therapeutic Drug Monitoring (약물모니터링)
+                { id: 62, name: 'Acetaminophen (ACET)', method: '면역법', category: '화학검사',
+                  principle: '아세트아미노펜 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '진통제']
+                },
+                { id: 63, name: 'Amikacin (AMIK)', method: '면역법', category: '화학검사',
+                  principle: '아미카신 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항생제']
+                },
+                { id: 64, name: 'Carbamazepine (CARB)', method: '면역법', category: '화학검사',
+                  principle: '카바마제핀 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항경련제']
+                },
+                { id: 65, name: 'Digoxin (DIG)', method: '면역법', category: '화학검사',
+                  principle: '디곡신 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '강심제']
+                },
+                { id: 66, name: 'Gentamicin (GENT)', method: '면역법', category: '화학검사',
+                  principle: '겐타마이신 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항생제']
+                },
+                { id: 67, name: 'Lithium', method: 'ISE법', category: '화학검사',
+                  principle: '리튬 혈중 농도를 측정합니다.',
+                  procedure: '1. 이온선택전극 측정\n2. 전위차 측정\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '정신과']
+                },
+                { id: 68, name: 'Mycophenolic Acid (MPA)', method: '면역법', category: '화학검사',
+                  principle: '미코페놀산 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '면역억제제']
+                },
+                { id: 69, name: 'Phenobarbital (PHNO)', method: '면역법', category: '화학검사',
+                  principle: '페노바르비탈 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항경련제']
+                },
+                { id: 70, name: 'Phenytoin (PHNY)', method: '면역법', category: '화학검사',
+                  principle: '페니토인 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항경련제']
+                },
+                { id: 71, name: 'Salicylate (SALI)', method: '면역법', category: '화학검사',
+                  principle: '살리실산 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '진통제']
+                },
+                { id: 72, name: 'Theophylline (THEO)', method: '면역법', category: '화학검사',
+                  principle: '테오필린 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '천식']
+                },
+                { id: 73, name: 'Tobramycin (TOBR)', method: '면역법', category: '화학검사',
+                  principle: '토브라마이신 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항생제']
+                },
+                { id: 74, name: 'Valproic Acid (VALP)', method: '면역법', category: '화학검사',
+                  principle: '발프로산 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항경련제']
+                },
+                { id: 75, name: 'Vancomycin', method: '면역법', category: '화학검사',
+                  principle: '반코마이신 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정량 분석',
+                  tags: ['화학검사', '약물모니터링', '항생제']
+                },
+                
+                // Drug of Abuse (남용약물)
+                { id: 76, name: 'Amphetamines (AMPS)', method: '면역법', category: '화학검사',
+                  principle: '암페타민류를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                { id: 77, name: 'Barbiturates (BARB)', method: '면역법', category: '화학검사',
+                  principle: '바르비투레이트류를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                { id: 78, name: 'Benzodiazepines (BENZ)', method: '면역법', category: '화학검사',
+                  principle: '벤조디아제핀류를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                { id: 79, name: 'Cannabinoids (THC)', method: '면역법', category: '화학검사',
+                  principle: '대마초 성분을 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                { id: 80, name: 'Cocaine (COC)', method: '면역법', category: '화학검사',
+                  principle: '코카인을 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                { id: 81, name: 'Ethanol (ETOH)', method: '효소법', category: '화학검사',
+                  principle: '에탄올 농도를 측정합니다.',
+                  procedure: '1. ADH 효소 반응\n2. NADH 생성\n3. 340nm에서 측정',
+                  tags: ['화학검사', '알코올', '정량']
+                },
+                { id: 82, name: 'Opiates (OPI)', method: '면역법', category: '화학검사',
+                  principle: '아편류를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                { id: 83, name: 'Phencyclidine (PCP)', method: '면역법', category: '화학검사',
+                  principle: 'PCP를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 경쟁적 면역분석\n3. 정성 분석',
+                  tags: ['화학검사', '남용약물', '정성']
+                },
+                
+                // Other
+                { id: 84, name: 'HbA1c', method: 'HPLC법', category: '화학검사',
+                  principle: '당화혈색소를 측정합니다.',
+                  procedure: '1. 용혈\n2. 이온교환 크로마토그래피\n3. 415nm에서 측정',
+                  tags: ['화학검사', '당뇨', '당화혈색소']
+                },
+                
+                // Ion Selective Electrode
+                { id: 85, name: 'Chloride', method: 'ISE법', category: '화학검사',
+                  principle: '이온선택전극으로 염소 이온을 측정합니다.',
+                  procedure: '1. 이온선택전극 측정\n2. 전위차 측정\n3. 정량 분석',
+                  tags: ['화학검사', '전해질', 'ISE']
+                },
+                { id: 86, name: 'Potassium', method: 'ISE법', category: '화학검사',
+                  principle: '이온선택전극으로 칼륨 이온을 측정합니다.',
+                  procedure: '1. 이온선택전극 측정\n2. 전위차 측정\n3. 정량 분석',
+                  tags: ['화학검사', '전해질', 'ISE']
+                },
+                { id: 87, name: 'Sodium', method: 'ISE법', category: '화학검사',
+                  principle: '이온선택전극으로 나트륨 이온을 측정합니다.',
+                  procedure: '1. 이온선택전극 측정\n2. 전위차 측정\n3. 정량 분석',
+                  tags: ['화학검사', '전해질', 'ISE']
+                }
+            ],
+            immunity: [
+                // Infectious disease
+                { id: 11, name: 'Anti-HAV IgM', method: 'ECLIA', category: '면역검사',
+                  principle: 'A형 간염 바이러스에 대한 IgM 항체를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'A형간염']
+                },
+                { id: 12, name: 'Anti-HAV II', method: 'ECLIA', category: '면역검사',
+                  principle: 'A형 간염 바이러스에 대한 총 항체를 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'A형간염']
+                },
+                { id: 13, name: 'HBsAg II', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 표면 항원을 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정성/정량 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 14, name: 'Anti-HBs II', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 표면 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 15, name: 'HBsAg II quant II', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 표면 항원의 정량 검사입니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 16, name: 'HBeAg', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 e 항원을 검출합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 17, name: 'Anti-HBe', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 e 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 18, name: 'Anti-HBc', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 core 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 19, name: 'Anti-HBc IgM', method: 'ECLIA', category: '면역검사',
+                  principle: 'B형 간염 core IgM 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'B형간염']
+                },
+                { id: 20, name: 'Anti-HCV', method: 'ECLIA', category: '면역검사',
+                  principle: 'C형 간염 바이러스 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'C형간염']
+                },
+                { id: 21, name: 'HIV duo', method: 'ECLIA', category: '면역검사',
+                  principle: 'HIV 항원 및 항체를 동시 검출합니다.',
+                  procedure: '1. 검체와 시약 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'HIV']
+                },
+                { id: 22, name: 'HTLV-1,2', method: 'ECLIA', category: '면역검사',
+                  principle: 'HTLV-1,2 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'HTLV']
+                },
+                { id: 23, name: 'Syphilis', method: 'ECLIA', category: '면역검사',
+                  principle: '매독균 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성/정량 분석',
+                  tags: ['면역검사', '감염성질환', '매독']
+                },
+                { id: 24, name: 'Rubella IgG', method: 'ECLIA', category: '면역검사',
+                  principle: '풍진 IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', '풍진']
+                },
+                { id: 25, name: 'Rubella IgM', method: 'ECLIA', category: '면역검사',
+                  principle: '풍진 IgM 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', '풍진']
+                },
+                { id: 26, name: 'Toxo IgG', method: 'ECLIA', category: '면역검사',
+                  principle: '톡소플라즈마 IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', '톡소플라즈마']
+                },
+                { id: 27, name: 'Toxo IgM', method: 'ECLIA', category: '면역검사',
+                  principle: '톡소플라즈마 IgM 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', '톡소플라즈마']
+                },
+                { id: 28, name: 'Toxo avidity', method: 'ECLIA', category: '면역검사',
+                  principle: '톡소플라즈마 항체의 결합력을 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. Avidity 측정\n3. 감염 시기 판정',
+                  tags: ['면역검사', '감염성질환', '톡소플라즈마']
+                },
+                { id: 29, name: 'CMV IgG', method: 'ECLIA', category: '면역검사',
+                  principle: '거대세포바이러스 IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'CMV']
+                },
+                { id: 30, name: 'CMV IgM', method: 'ECLIA', category: '면역검사',
+                  principle: '거대세포바이러스 IgM 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'CMV']
+                },
+                { id: 31, name: 'CMV avidity', method: 'ECLIA', category: '면역검사',
+                  principle: 'CMV 항체의 결합력을 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. Avidity 측정\n3. 감염 시기 판정',
+                  tags: ['면역검사', '감염성질환', 'CMV']
+                },
+                { id: 32, name: 'Anti-SARS-CoV-2 total', method: 'ECLIA', category: '면역검사',
+                  principle: 'SARS-CoV-2 총 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성/정량 분석',
+                  tags: ['면역검사', '감염성질환', 'COVID-19']
+                },
+                { id: 33, name: 'Anti-SARS-CoV-2 S', method: 'ECLIA', category: '면역검사',
+                  principle: 'SARS-CoV-2 스파이크 단백 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'COVID-19']
+                },
+                { id: 34, name: 'HSV-1 IgG', method: 'ECLIA', category: '면역검사',
+                  principle: '단순포진 바이러스 1형 IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'HSV']
+                },
+                { id: 35, name: 'HSV-2 IgG', method: 'ECLIA', category: '면역검사',
+                  principle: '단순포진 바이러스 2형 IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'HSV']
+                },
+                { id: 36, name: 'EBV IgM', method: 'ECLIA', category: '면역검사',
+                  principle: 'Epstein-Barr 바이러스 IgM 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정성 분석',
+                  tags: ['면역검사', '감염성질환', 'EBV']
+                },
+                { id: 37, name: 'EBV VCA IgG', method: 'ECLIA', category: '면역검사',
+                  principle: 'EBV VCA IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'EBV']
+                },
+                { id: 38, name: 'EBV EBNA IgG', method: 'ECLIA', category: '면역검사',
+                  principle: 'EBV EBNA IgG 항체를 검출합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '감염성질환', 'EBV']
+                },
+                
+                // Thyroid function
+                { id: 50, name: 'TG II', method: 'ECLIA', category: '면역검사',
+                  principle: '티로글로불린을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '호르몬']
+                },
+                { id: 51, name: 'Anti-Tg', method: 'ECLIA', category: '면역검사',
+                  principle: '티로글로불린 항체를 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '자가면역']
+                },
+                { id: 52, name: 'Anti-TPO', method: 'ECLIA', category: '면역검사',
+                  principle: '갑상선 과산화효소 항체를 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '자가면역']
+                },
+                { id: 53, name: 'Anti-TSHR', method: 'ECLIA', category: '면역검사',
+                  principle: 'TSH 수용체 항체를 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '자가면역']
+                },
+                { id: 54, name: 'TSH', method: 'ECLIA', category: '면역검사',
+                  principle: '갑상선 자극 호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '호르몬']
+                },
+                { id: 55, name: 'T3', method: 'ECLIA', category: '면역검사',
+                  principle: 'Triiodothyronine을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '호르몬']
+                },
+                { id: 56, name: 'T4', method: 'ECLIA', category: '면역검사',
+                  principle: 'Thyroxine을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '호르몬']
+                },
+                { id: 57, name: 'FT3 III', method: 'ECLIA', category: '면역검사',
+                  principle: '유리 T3를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '호르몬']
+                },
+                { id: 58, name: 'FT4 IV', method: 'ECLIA', category: '면역검사',
+                  principle: '유리 T4를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '호르몬']
+                },
+                { id: 59, name: 'T-Uptake', method: 'ECLIA', category: '면역검사',
+                  principle: 'T3 섭취율을 측정합니다.',
+                  procedure: '1. 검체와 시약 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '기능검사']
+                },
+                { id: 60, name: 'Calcitonin', method: 'ECLIA', category: '면역검사',
+                  principle: '칼시토닌 호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '갑상선', '종양표지자']
+                },
+                
+                // Tumor markers
+                { id: 70, name: 'AFP', method: 'ECLIA', category: '면역검사',
+                  principle: '알파태아단백을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '간암']
+                },
+                { id: 71, name: 'PIVKA II', method: 'ECLIA', category: '면역검사',
+                  principle: '비정상 프로트롬빈을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '간암']
+                },
+                { id: 72, name: 'CEA', method: 'ECLIA', category: '면역검사',
+                  principle: '암배아항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', 'ECLIA']
+                },
+                { id: 73, name: 'total PSA', method: 'ECLIA', category: '면역검사',
+                  principle: '전립선 특이 항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '전립선암']
+                },
+                { id: 74, name: 'free PSA', method: 'ECLIA', category: '면역검사',
+                  principle: '유리 PSA를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '전립선암']
+                },
+                { id: 75, name: 'CA 15-3 II', method: 'ECLIA', category: '면역검사',
+                  principle: 'CA 15-3 항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '유방암']
+                },
+                { id: 76, name: 'CA 19-9', method: 'ECLIA', category: '면역검사',
+                  principle: 'CA 19-9 항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '췌장암']
+                },
+                { id: 77, name: 'CA 72-4', method: 'ECLIA', category: '면역검사',
+                  principle: 'CA 72-4 항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '위암']
+                },
+                { id: 78, name: 'CA 125 II', method: 'ECLIA', category: '면역검사',
+                  principle: 'CA 125 항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '난소암']
+                },
+                { id: 79, name: 'HE4', method: 'ECLIA', category: '면역검사',
+                  principle: '인간 부고환 단백 4를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '난소암']
+                },
+                { id: 80, name: 'Cyfra 21-1', method: 'ECLIA', category: '면역검사',
+                  principle: '사이토케라틴 19 단편을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '폐암']
+                },
+                { id: 81, name: 'NSE', method: 'ECLIA', category: '면역검사',
+                  principle: '신경특이 에놀라제를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '소세포폐암']
+                },
+                { id: 82, name: 'SCC', method: 'ECLIA', category: '면역검사',
+                  principle: '편평상피세포암 항원을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '편평상피암']
+                },
+                { id: 83, name: 'ProGRP', method: 'ECLIA', category: '면역검사',
+                  principle: 'Pro-gastrin releasing peptide를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '종양표지자', '소세포폐암']
+                },
+                
+                // Cardiac
+                { id: 90, name: 'CK-MB', method: 'ECLIA', category: '면역검사',
+                  principle: 'Creatine kinase MB를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '심근경색']
+                },
+                { id: 91, name: 'Digoxin', method: 'ECLIA', category: '면역검사',
+                  principle: '디곡신 약물 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '약물모니터링']
+                },
+                { id: 92, name: 'Myoglobin', method: 'ECLIA', category: '면역검사',
+                  principle: '미오글로빈을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '심근경색']
+                },
+                { id: 93, name: 'GDF-15', method: 'ECLIA', category: '면역검사',
+                  principle: 'Growth differentiation factor 15를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '바이오마커']
+                },
+                { id: 94, name: 'proBNP', method: 'ECLIA', category: '면역검사',
+                  principle: 'NT-proBNP를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '심부전']
+                },
+                { id: 95, name: 'Troponin T hs', method: 'ECLIA', category: '면역검사',
+                  principle: '고감도 트로포닌 T를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '심근경색']
+                },
+                { id: 96, name: 'Troponin I', method: 'ECLIA', category: '면역검사',
+                  principle: '트로포닌 I를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '심장', '심근경색']
+                },
+                
+                // Anemia
+                { id: 100, name: 'Ferritin', method: 'ECLIA', category: '면역검사',
+                  principle: '페리틴을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '빈혈', '철대사']
+                },
+                { id: 101, name: 'Folate GIII', method: 'ECLIA', category: '면역검사',
+                  principle: '엽산을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '빈혈', '비타민']
+                },
+                { id: 102, name: 'Folate GIII(RBC)', method: 'ECLIA', category: '면역검사',
+                  principle: '적혈구 내 엽산을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '빈혈', '비타민']
+                },
+                { id: 103, name: 'Vitamin B12 II', method: 'ECLIA', category: '면역검사',
+                  principle: '비타민 B12를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '빈혈', '비타민']
+                },
+                
+                // Fertility/Pregnancy
+                { id: 110, name: 'Estradiol III', method: 'ECLIA', category: '면역검사',
+                  principle: '에스트라디올을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '임신']
+                },
+                { id: 111, name: 'HCG+beta', method: 'ECLIA', category: '면역검사',
+                  principle: 'HCG와 beta subunit을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '임신']
+                },
+                { id: 112, name: 'HCG STAT', method: 'ECLIA', category: '면역검사',
+                  principle: 'HCG 응급 검사입니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '임신']
+                },
+                { id: 113, name: 'FSH', method: 'ECLIA', category: '면역검사',
+                  principle: '난포자극호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '생식']
+                },
+                { id: 114, name: 'LH', method: 'ECLIA', category: '면역검사',
+                  principle: '황체형성호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '생식']
+                },
+                { id: 115, name: 'AMH Plus', method: 'ECLIA', category: '면역검사',
+                  principle: '항뮬러관호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '난소예비력']
+                },
+                { id: 116, name: 'Progesterone III', method: 'ECLIA', category: '면역검사',
+                  principle: '프로게스테론을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '생식']
+                },
+                { id: 117, name: 'Prolactin II', method: 'ECLIA', category: '면역검사',
+                  principle: '프로락틴을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '생식']
+                },
+                { id: 118, name: 'SHBG', method: 'ECLIA', category: '면역검사',
+                  principle: '성호르몬결합글로불린을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '생식']
+                },
+                { id: 119, name: 'Testosterone II', method: 'ECLIA', category: '면역검사',
+                  principle: '테스토스테론을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '생식']
+                },
+                { id: 120, name: 'DHEA-S', method: 'ECLIA', category: '면역검사',
+                  principle: 'Dehydroepiandrosterone sulfate를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '부신']
+                },
+                { id: 121, name: 'free βhCG', method: 'ECLIA', category: '면역검사',
+                  principle: '유리 베타 HCG를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '임신']
+                },
+                { id: 122, name: 'PAPP-A', method: 'ECLIA', category: '면역검사',
+                  principle: 'Pregnancy-associated plasma protein A를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '임신']
+                },
+                { id: 123, name: 'sFLT-1', method: 'ECLIA', category: '면역검사',
+                  principle: 'Soluble fms-like tyrosine kinase 1을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '자간전증']
+                },
+                { id: 124, name: 'PlGF', method: 'ECLIA', category: '면역검사',
+                  principle: 'Placental growth factor를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '자간전증']
+                },
+                
+                // Hormones & Other
+                { id: 130, name: 'ACTH', method: 'ECLIA', category: '면역검사',
+                  principle: '부신피질자극호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '뇌하수체']
+                },
+                { id: 131, name: 'Cortisol II', method: 'ECLIA', category: '면역검사',
+                  principle: '코르티솔을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '부신']
+                },
+                { id: 132, name: 'hGH', method: 'ECLIA', category: '면역검사',
+                  principle: '성장호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '성장']
+                },
+                { id: 133, name: 'IGF-1', method: 'ECLIA', category: '면역검사',
+                  principle: 'Insulin-like growth factor 1을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '성장']
+                },
+                { id: 134, name: 'IGFBP-3', method: 'ECLIA', category: '면역검사',
+                  principle: 'IGF binding protein 3를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '성장']
+                },
+                { id: 135, name: 'Insulin', method: 'ECLIA', category: '면역검사',
+                  principle: '인슐린을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '당뇨']
+                },
+                { id: 136, name: 'C-Peptide', method: 'ECLIA', category: '면역검사',
+                  principle: 'C-펩타이드를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '호르몬', '당뇨']
+                },
+                { id: 137, name: 'Anti-CCP', method: 'ECLIA', category: '면역검사',
+                  principle: '항CCP 항체를 측정합니다.',
+                  procedure: '1. 검체와 항원 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '자가면역', '류마티스']
+                },
+                { id: 138, name: 'IgE II', method: 'ECLIA', category: '면역검사',
+                  principle: '총 IgE를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '알레르기', 'IgE']
+                },
+                
+                // Bone markers
+                { id: 150, name: 'β-CrossLaps/serum', method: 'ECLIA', category: '면역검사',
+                  principle: '베타-크로스랩스를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '골대사', '골흡수']
+                },
+                { id: 151, name: 'N-MID Osteocalcin', method: 'ECLIA', category: '면역검사',
+                  principle: 'N-MID 오스테오칼신을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '골대사', '골형성']
+                },
+                { id: 152, name: 'PTH', method: 'ECLIA', category: '면역검사',
+                  principle: '부갑상선호르몬을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '골대사', '칼슘대사']
+                },
+                { id: 153, name: 'PTH (1-84)', method: 'ECLIA', category: '면역검사',
+                  principle: 'Intact PTH를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '골대사', '칼슘대사']
+                },
+                { id: 154, name: 'total P1NP', method: 'ECLIA', category: '면역검사',
+                  principle: 'Procollagen type 1 N-terminal propeptide를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '골대사', '골형성']
+                },
+                { id: 155, name: 'Vitamin D total III', method: 'ECLIA', category: '면역검사',
+                  principle: '총 비타민 D를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '비타민', '골대사']
+                },
+                
+                // ISD (Immunosuppressive Drug)
+                { id: 160, name: 'Tacrolimus', method: 'ECLIA', category: '면역검사',
+                  principle: '타크로리무스 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                },
+                { id: 161, name: 'Cyclosporine', method: 'ECLIA', category: '면역검사',
+                  principle: '사이클로스포린 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                },
+                { id: 162, name: 'Sirolimus', method: 'ECLIA', category: '면역검사',
+                  principle: '시롤리무스 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                },
+                { id: 163, name: 'Everolimus', method: 'ECLIA', category: '면역검사',
+                  principle: '에버로리무스 혈중 농도를 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '약물모니터링', '면역억제제']
+                },
+                
+                // Critical care
+                { id: 170, name: 'S 100', method: 'ECLIA', category: '면역검사',
+                  principle: 'S100 단백을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '응급', '뇌손상']
+                },
+                { id: 171, name: 'BRAHMS PCT', method: 'ECLIA', category: '면역검사',
+                  principle: '프로칼시토닌을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '응급', '패혈증']
+                },
+                { id: 172, name: 'IL-6', method: 'ECLIA', category: '면역검사',
+                  principle: '인터루킨-6을 측정합니다.',
+                  procedure: '1. 검체와 항체 반응\n2. 전기화학발광 측정\n3. 정량 분석',
+                  tags: ['면역검사', '응급', '염증']
+                }
+            ],
+            blood: [
+                { id: 21, name: 'CBC (Complete Blood Count)', method: 'Impedance Method', category: '혈액검사',
+                  principle: '전기저항법을 이용한 혈구 계수입니다.\n\n세포가 통과할 때 전기저항 변화를 측정',
+                  procedure: '1. 검체 희석\n2. Aperture 통과\n3. 전기신호 분석\n4. 자동 계수',
+                  tags: ['혈액검사', '혈구계수', '자동화']
+                },
+                { id: 22, name: 'ESR (적혈구침강속도)', method: 'Westergren Method', category: '혈액검사',
+                  principle: '적혈구의 침강 속도를 측정합니다.\n\n1시간 동안 적혈구가 침강한 거리를 mm로 측정',
+                  procedure: '1. 항응고 처리된 혈액 준비\n2. Westergren tube에 주입\n3. 1시간 후 침강 거리 측정',
+                  tags: ['혈액검사', '염증지표', '수기법']
+                }
+            ],
+            equipment: [
+                { id: 31, name: 'cobas pro integrated solutions', method: '통합 자동화 시스템', category: '장비정보',
+                  principle: '중대형 검사실을 위한 생화학 및 면역화학 통합 솔루션입니다.\n\n모듈식 확장 가능한 구조로 워크플로우를 최적화합니다.',
+                  procedure: '• 처리량: 중대형 규모\n• cobas c 503/c 703 분석 유닛\n• cobas e 801 면역 분석 유닛\n• cobas ISE neo 전해질 분석',
+                  maintenance: '• 매일: 시스템 점검, QC\n• 매주: 프로브 세척\n• 매월: 정기 점검',
+                  tags: ['자동화시스템', '통합솔루션', '중대형'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/systems/cobas-pro-integrated-system-sys-295-images/cobas_pro_integrated_solutions_main.jpg'
+                },
+                { id: 32, name: 'cobas pure integrated solutions', method: '소형 통합 솔루션', category: '장비정보',
+                  principle: '2m² 공간에 생화학, 면역화학, 전해질 검사를 통합한 솔루션입니다.\n\n215개 이상의 파라미터를 제공합니다.',
+                  procedure: '• 설치 면적: 2 평방미터\n• cobas pure c 303 화학 분석 유닛\n• cobas pure e 402 면역 분석 유닛\n• 통합 ISE\n• STAT 검사: 9분',
+                  maintenance: '• 자동 유지보수 기능\n• 간편한 시약 로딩\n• 최소한의 수작업',
+                  tags: ['소형', '통합솔루션', '공간절약'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/systems/cobas-pure-integrated-solutions-sys-351-images/cobas-pure-integrated-solutions-main.jpg'
+                },
+                { id: 33, name: 'cobas 8000 modular analyzer series', method: '모듈형 분석 시스템', category: '장비정보',
+                  principle: '대형 검사실을 위한 확장 가능한 모듈형 시스템입니다.\n\n생화학 및 면역화학 검사를 고처리량으로 수행합니다.',
+                  procedure: '• 모듈식 구성\n• cobas c 701/c 702 화학 모듈\n• cobas e 801 면역 모듈\n• cobas ISE 전해질 모듈\n• 유연한 확장',
+                  maintenance: '• 자동화된 유지보수\n• 모듈별 독립 관리\n• 24시간 운영 가능',
+                  tags: ['대형', '모듈형', '고처리량'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/systems/cobas-8000-analyzer-series-sys-128-images/cobas-8000-modular-analyzer-series-main.jpg'
+                },
+                { id: 34, name: 'cobas 6000 analyzer series', method: '중형 분석 시스템', category: '장비정보',
+                  principle: '완전 자동화된 중형 생화학/면역화학 분석 시스템입니다.\n\n고처리량 워크로드에 최적화되어 있습니다.',
+                  procedure: '• cobas c 501 화학 모듈\n• cobas e 601 면역 모듈\n• 통합 ISE\n• 랜덤 액세스',
+                  maintenance: '• 매일: 시스템 점검\n• 주기적 캘리브레이션\n• 정기 유지보수',
+                  tags: ['중형', '자동화', '랜덤액세스'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/systems/cobas-6000-analyzer-series-sys-65-images/cobas-6000-analyzer-series-main.jpg'
+                },
+                { id: 35, name: 'cobas c 503', method: '생화학 분석기', category: '장비정보',
+                  principle: '효율적인 생화학 검사를 수행하는 분석 유닛입니다.\n\n시간당 최대 1000 테스트를 처리합니다.',
+                  procedure: '• 처리량: 1000 tests/hour\n• 시약 위치: 60개\n• 검체 용량: 최소 2μL\n• 파장: 340-800nm',
+                  maintenance: '• 자동 세척 기능\n• 시약 관리 시스템\n• 정기 점검',
+                  tags: ['생화학', '중처리량', '효율성'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-c-503-ins-2140-images/cobas-c-503-main.jpg'
+                },
+                { id: 36, name: 'cobas c 703', method: '고처리량 생화학 분석기', category: '장비정보',
+                  principle: '고처리량 생화학 검사를 수행하는 차세대 분석 유닛입니다.\n\n시간당 최대 2000 테스트를 처리합니다.',
+                  procedure: '• 처리량: 2000 tests/hour\n• 시약 위치: 70개\n• 고속 처리\n• 향상된 처리 능력',
+                  maintenance: '• 자동화된 유지보수\n• 지능형 시약 관리\n• 최소 다운타임',
+                  tags: ['생화학', '고처리량', '차세대'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-c-703-ins-2811-images/cobas-c-703-main.jpg'
+                },
+                { id: 37, name: 'cobas e 801', method: '면역화학 분석기', category: '장비정보',
+                  principle: '전기화학발광(ECLIA) 기술을 사용하는 면역화학 분석 유닛입니다.\n\n시간당 최대 300 테스트를 처리합니다.',
+                  procedure: '• 처리량: 300 tests/hour\n• 시약 위치: 48개\n• ECLIA 기술\n• 고감도 측정',
+                  maintenance: '• 전극 관리\n• 시약 안정성 모니터링\n• 정기 캘리브레이션',
+                  tags: ['면역화학', 'ECLIA', '고감도'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-e-801-ins-2140-images/cobas-e-801-main.jpg'
+                },
+                { id: 38, name: 'cobas c 303', method: '소형 생화학 분석기', category: '장비정보',
+                  principle: '소규모 검사실을 위한 생화학 분석 유닛입니다.\n\n컴팩트한 설계로 공간 효율성이 높습니다.',
+                  procedure: '• 소형 설계\n• 필수 생화학 검사\n• 간편한 조작\n• 빠른 결과',
+                  maintenance: '• 간단한 유지보수\n• 자동 세척\n• 최소 소모품',
+                  tags: ['소형', '생화학', '공간절약'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-c-303-ins-2811-images/cobas-c-303-main.jpg'
+                },
+                { id: 39, name: 'cobas e 402', method: '소형 면역화학 분석기', category: '장비정보',
+                  principle: '소규모 검사실을 위한 면역화학 분석 유닛입니다.\n\nECLIA 기술로 정확한 결과를 제공합니다.',
+                  procedure: '• 소형 설계\n• ECLIA 기술\n• 필수 면역 검사\n• 사용 편의성',
+                  maintenance: '• 자동 유지보수\n• 간편한 시약 교체\n• 안정적 운영',
+                  tags: ['소형', '면역화학', 'ECLIA'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-e-402-ins-2811-images/cobas-e-402-main.jpg'
+                },
+                { id: 40, name: 'cobas 6800 system', method: '분자진단 시스템', category: '장비정보',
+                  principle: 'PCR 기반 핵산 검사(NAT)를 자동화 통합 워크플로우로 수행합니다.\n\n샘플 처리부터 결과 해석까지 완전 자동화됩니다.',
+                  procedure: '• 자동화된 PCR 검사\n• 최대 6가지 검사 동시 수행\n• 지능형 스케줄링\n• HL7 표준 프로토콜 통신',
+                  maintenance: '• 유연한 QC 관리\n• 자동 유지보수\n• 시스템 모니터링',
+                  tags: ['분자진단', 'PCR', '자동화'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-6800-ins-2693-images/cobas-6800-main.jpg'
+                },
+                { id: 41, name: 'cobas 8800 system', method: '대용량 분자진단 시스템', category: '장비정보',
+                  principle: '대용량 PCR 검사를 위한 자동화 시스템입니다.\n\ncobas 6800의 고처리량 버전입니다.',
+                  procedure: '• 고처리량 PCR\n• 완전 자동화\n• 다중 검사 동시 수행\n• 통합 데이터 관리',
+                  maintenance: '• 자동 유지보수\n• 지능형 관리\n• 최소 다운타임',
+                  tags: ['분자진단', 'PCR', '대용량'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-8800-ins-2693-images/cobas-8800-main.jpg'
+                },
+                { id: 42, name: 'cobas p 501 post-analytical unit', method: '후처리 장비', category: '장비정보',
+                  principle: '1차 및 2차 검체 튜브를 보관하는 후처리 장비입니다.\n\n냉장 보관 조건에서 자동 관리됩니다.',
+                  procedure: '• 냉장 보관: 4-8°C\n• 자동 검체 회수\n• 41개 포지션 랙\n• 자동 폐기 기능',
+                  maintenance: '• 온도 모니터링\n• 자동 디스토핑\n• 바코드 관리',
+                  tags: ['후처리', '검체보관', '자동화'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-p-501-ins-2115-images/cobas-p-501-main.jpg'
+                },
+                { id: 43, name: 'cobas p 701 post-analytical unit', method: '대용량 후처리 장비', category: '장비정보',
+                  principle: '대용량 검체 보관을 위한 후처리 장비입니다.\n\ncobas p 501의 대용량 버전입니다.',
+                  procedure: '• 대용량 냉장 보관\n• 자동 검체 관리\n• CCM 연결 가능\n• 스마트 폐기',
+                  maintenance: '• 자동 온도 관리\n• 보관 기간 관리\n• 최소 수작업',
+                  tags: ['후처리', '대용량', '자동화'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-p-701-ins-2115-images/cobas-p-701-main.jpg'
+                },
+                { id: 44, name: 'cobas connection modules (CCM)', method: '연결 모듈', category: '장비정보',
+                  principle: '독립형 자동화 시스템을 다양한 분석 장비와 연결하는 솔루션입니다.\n\n빠른 운송 시스템을 통해 검체를 이동합니다.',
+                  procedure: '• 시간당 2500 샘플\n• 수평/수직 운송\n• 다학제 통합\n• 확장 가능',
+                  maintenance: '• 모듈식 확장\n• 유연한 워크플로우\n• 시스템 통합',
+                  tags: ['자동화', '연결모듈', '운송시스템'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/systems/cobas-connection-modules-sys-364-images/cobas-connection-modules-main.jpg'
+                },
+                { id: 45, name: 'cobas ISE neo 900', method: '전해질 분석기', category: '장비정보',
+                  principle: '이온선택전극으로 Na+, K+, Cl- 농도를 측정합니다.\n\n시간당 최대 900 테스트를 처리합니다.',
+                  procedure: '• 처리량: 900 tests/hour\n• 측정 이온: Na, K, Cl\n• 빠른 결과\n• 높은 정확도',
+                  maintenance: '• 전극 관리\n• 자동 캘리브레이션\n• 정기 점검',
+                  tags: ['전해질', 'ISE', '고속'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-ise-neo-900-ins-2811-images/cobas-ise-neo-900-main.jpg'
+                },
+                { id: 46, name: 'cobas ISE neo 1800', method: '고처리량 전해질 분석기', category: '장비정보',
+                  principle: 'Na+, K+, Cl- 이온을 고처리량으로 측정합니다.\n\n시간당 최대 1800 테스트를 처리합니다.',
+                  procedure: '• 처리량: 1800 tests/hour\n• 측정 이온: Na, K, Cl\n• 초고속 처리\n• 대용량 검사실용',
+                  maintenance: '• 자동 유지보수\n• 전극 최적화\n• 안정적 운영',
+                  tags: ['전해질', 'ISE', '초고속'],
+                  image: 'https://diagnostics.roche.com/content/dam/diagnostics/Blueprint/en/products/instruments/cobas-ise-neo-1800-ins-2811-images/cobas-ise-neo-1800-main.jpg'
+                }
+            ]
+        };
+
+        let currentCategory = '';
+        let currentItem = null;
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let screenHistory = [];
+        
+        // 퀴즈 관련 변수
+        let quizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let quizStartTime = 0;
+        let questionStartTime = 0;
+        let timeSpent = [];
+        
+        // 회의록 관련 변수
+        let meetings = JSON.parse(localStorage.getItem('meetings')) || [];
+        let currentMeetingId = null;
+
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            if (screenId !== 'home-screen') {
+                screenHistory.push(screenId);
+            }
+            
+            if (screenId === 'quiz-screen') {
+                startQuiz();
+            }
+            
+            if (screenId === 'meeting-screen') {
+                loadMeetings();
+            }
+        }
+
+        function goBack() {
+            if (screenHistory.length > 1) {
+                screenHistory.pop();
+                const previousScreen = screenHistory[screenHistory.length - 1];
+                goToScreen(previousScreen);
+            } else {
+                goToScreen('category-screen');
+            }
+        }
+
+        function switchNav(screenId, index) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[index].classList.add('active');
+            goToScreen(screenId);
+            
+            if (screenId === 'favorites-screen') {
+                loadFavorites();
+            }
+        }
+
+        function goToCategory(categoryId, categoryName) {
+            currentCategory = categoryId;
+            document.getElementById('category-title').textContent = categoryName;
+            
+            const items = database[categoryId] || [];
+            document.getElementById('item-count').textContent = `총 ${items.length}개`;
+            
+            const listContainer = document.getElementById('category-list');
+            listContainer.innerHTML = '';
+            
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'list-item';
+                itemDiv.onclick = () => showDetail(item);
+                itemDiv.innerHTML = `
+                    <div>
+                        <div class="list-title">${item.name}</div>
+                        <div class="list-subtitle">${item.method}</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+            
+            goToScreen('category-screen');
+        }
+
+        function showDetail(item) {
+            currentItem = item;
+            
+            const breadcrumbParts = item.category.split(' > ');
+            document.getElementById('detail-breadcrumb').innerHTML = `
+                <span>${item.category}</span>
+                <span>›</span>
+                <span>${item.name.split('(')[0].trim()}</span>
+            `;
+            
+            document.getElementById('detail-item-title').textContent = item.name;
+            
+            const tagsContainer = document.getElementById('detail-tags');
+            tagsContainer.innerHTML = '';
+            item.tags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'tag';
+                tagSpan.textContent = tag;
+                tagsContainer.appendChild(tagSpan);
+            });
+            
+            const favBtn = document.getElementById('favorite-btn');
+            if (favorites.some(f => f.id === item.id)) {
+                favBtn.classList.add('active');
+                favBtn.textContent = '♥';
+            } else {
+                favBtn.classList.remove('active');
+                favBtn.textContent = '♡';
+            }
+            
+            const contentContainer = document.getElementById('detail-content');
+            
+            // 이미지 처리
+            let imageHtml = '';
+            if (item.image) {
+                imageHtml = `
+                    <img src="${item.image}" 
+                         alt="${item.name}" 
+                         style="width: 100%; border-radius: 16px; margin-bottom: 24px; object-fit: cover; max-height: 300px;"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="image-placeholder" style="display: none;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 60px; margin-bottom: 10px;">●</div>
+                            <div style="color: var(--gray-600); font-size: 14px;">${item.name}</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                imageHtml = `
+                    <div class="image-placeholder">
+                        <div style="text-align: center;">
+                            <div style="font-size: 60px; margin-bottom: 10px;">●</div>
+                            <div style="color: var(--gray-600); font-size: 14px;">${item.name}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            contentContainer.innerHTML = `
+                ${imageHtml}
+                
+                <div class="detail-section">
+                    <div class="section-title">
+                        <span class="section-icon">■</span>
+                        <span>검사 원리</span>
+                    </div>
+                    <div class="section-content">${item.principle.replace(/\n/g, '<br>')}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="section-title">
+                        <span class="section-icon">●</span>
+                        <span>${item.category === '장비정보' ? '장비 사양' : '검사 방법'}</span>
+                    </div>
+                    <div class="section-content">${item.procedure.replace(/\n/g, '<br>')}</div>
+                </div>
+                
+                ${item.maintenance ? `
+                <div class="detail-section">
+                    <div class="section-title">
+                        <span class="section-icon">○</span>
+                        <span>유지보수</span>
+                    </div>
+                    <div class="section-content">${item.maintenance.replace(/\n/g, '<br>')}</div>
+                </div>
+                ` : ''}
+            `;
+            
+            goToScreen('detail-screen');
+        }
+
+        function toggleFavorite() {
+            if (!currentItem) return;
+            
+            const index = favorites.findIndex(f => f.id === currentItem.id);
+            const favBtn = document.getElementById('favorite-btn');
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+                favBtn.classList.remove('active');
+                favBtn.textContent = '♡';
+            } else {
+                favorites.push(currentItem);
+                favBtn.classList.add('active');
+                favBtn.textContent = '♥';
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function loadFavorites() {
+            const listContainer = document.getElementById('favorites-list');
+            document.getElementById('favorites-count').textContent = `자주 보는 항목 (${favorites.length}개)`;
+            
+            if (favorites.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        
+                        <h3>즐겨찾기가 비어있습니다</h3>
+                        <p>상세 페이지에서 ♥ 버튼을 눌러 추가하세요</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            listContainer.innerHTML = '';
+            favorites.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'list-item';
+                itemDiv.onclick = () => showDetail(item);
+                itemDiv.innerHTML = `
+                    <div>
+                        <div class="list-title">${item.name}</div>
+                        <div class="list-subtitle">${item.category}</div>
+                    </div>
+                    <div style="color: var(--danger); font-size: 20px;">♥</div>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+        }
+
+        document.getElementById('main-search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (!query) {
+                resultsContainer.innerHTML = `
+                    <div class="empty-state">
+                        
+                        <h3>검색어를 입력하세요</h3>
+                        <p>시약명, 장비명, 검사명으로 검색할 수 있습니다</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const allItems = [...database.chemistry, ...database.immunity, ...database.blood, ...database.equipment];
+            const results = allItems.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.method.toLowerCase().includes(query)
+            );
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="empty-state">
+                        
+                        <h3>검색 결과가 없습니다</h3>
+                        <p>"${e.target.value}"에 대한 결과를 찾을 수 없습니다</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            resultsContainer.innerHTML = `<div style="padding: 20px; color: var(--gray-700); font-weight: 600; font-size: 15px;">검색 결과 (${results.length}개)</div>`;
+            results.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'list-item';
+                itemDiv.onclick = () => showDetail(item);
+                itemDiv.innerHTML = `
+                    <div>
+                        <div class="list-title">${item.name}</div>
+                        <div class="list-subtitle">${item.category} > ${item.method}</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                `;
+                resultsContainer.appendChild(itemDiv);
+            });
+        });
+
+        document.getElementById('category-search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const items = database[currentCategory] || [];
+            const listContainer = document.getElementById('category-list');
+            
+            if (!query) {
+                listContainer.innerHTML = '';
+                items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'list-item';
+                    itemDiv.onclick = () => showDetail(item);
+                    itemDiv.innerHTML = `
+                        <div>
+                            <div class="list-title">${item.name}</div>
+                            <div class="list-subtitle">${item.method}</div>
+                        </div>
+                        <div class="list-arrow">→</div>
+                    `;
+                    listContainer.appendChild(itemDiv);
+                });
+                return;
+            }
+            
+            const results = items.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.method.toLowerCase().includes(query)
+            );
+            
+            listContainer.innerHTML = '';
+            results.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'list-item';
+                itemDiv.onclick = () => showDetail(item);
+                itemDiv.innerHTML = `
+                    <div>
+                        <div class="list-title">${item.name}</div>
+                        <div class="list-subtitle">${item.method}</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                `;
+                listContainer.appendChild(itemDiv);
+            });
+        });
+        
+        // 퀴즈 관련 함수
+        const quizData = [
+            {
+                question: 'Glucose 검사에 사용되는 효소법은?',
+                options: ['GOD-POD 효소법', 'CHOD-POD 효소법', 'UV Rate Method', 'Jaffe Method'],
+                correct: 0,
+                category: '화학검사',
+                explanation: 'Glucose 검사는 GOD-POD(Glucose Oxidase-Peroxidase) 효소법을 사용합니다.'
+            },
+            {
+                question: 'Total Cholesterol 측정에 사용되는 방법은?',
+                options: ['GOD-POD 효소법', 'CHOD-POD 효소법', 'Jaffe Method', 'UV Rate Method'],
+                correct: 1,
+                category: '화학검사',
+                explanation: 'Total Cholesterol은 CHOD-POD(Cholesterol Oxidase-Peroxidase) 효소법으로 측정합니다.'
+            },
+            {
+                question: 'AST/GOT 측정에 사용되는 파장은?',
+                options: ['505nm', '340nm', '570nm', '450nm'],
+                correct: 1,
+                category: '화학검사',
+                explanation: 'AST는 UV Rate Method로 340nm에서 흡광도 변화를 측정합니다.'
+            },
+            {
+                question: 'CRP 측정에 사용되는 원리는?',
+                options: ['면역비탁법', 'Latex 응집법', '효소법', 'Jaffe Method'],
+                correct: 0,
+                category: '면역검사',
+                explanation: 'CRP는 면역비탁법(Immunoturbidimetry)으로 측정합니다.'
+            },
+            {
+                question: 'CEA는 어떤 종류의 검사인가요?',
+                options: ['간기능 검사', '신기능 검사', '종양표지자', '염증지표'],
+                correct: 2,
+                category: '면역검사',
+                explanation: 'CEA(Carcinoembryonic Antigen)는 종양표지자 검사입니다.'
+            },
+            {
+                question: 'RF(Rheumatoid Factor) 측정 방법은?',
+                options: ['면역비탁법', 'Latex 응집법', 'ECLIA', 'UV Rate Method'],
+                correct: 1,
+                category: '면역검사',
+                explanation: 'RF는 Latex 응집법으로 측정합니다.'
+            },
+            {
+                question: 'CBC 검사의 측정 원리는?',
+                options: ['효소법', '전기저항법', '면역법', '비색법'],
+                correct: 1,
+                category: '혈액검사',
+                explanation: 'CBC는 전기저항법(Impedance Method)으로 혈구를 계수합니다.'
+            },
+            {
+                question: 'Creatinine 측정에 사용되는 방법은?',
+                options: ['GOD-POD법', 'Jaffe Method', 'UV Rate Method', 'CHOD-POD법'],
+                correct: 1,
+                category: '화학검사',
+                explanation: 'Creatinine은 Jaffe 반응을 이용한 비색법으로 측정합니다.'
+            },
+            {
+                question: 'ESR 검사에서 측정하는 것은?',
+                options: ['혈구 개수', '적혈구 침강 속도', '혈소판 기능', '백혈구 분류'],
+                correct: 1,
+                category: '혈액검사',
+                explanation: 'ESR(적혈구침강속도)은 1시간 동안 적혈구가 침강한 거리를 측정합니다.'
+            },
+            {
+                question: 'CS-240 분석기의 측정 방식은?',
+                options: ['전기저항법', '흡광도법', '유세포분석법', 'Latex응집법'],
+                correct: 1,
+                category: '장비정보',
+                explanation: 'CS-240 자동화학분석기는 흡광도법으로 측정합니다.'
+            }
+        ];
+        
+        function startQuiz() {
+            quizQuestions = [...quizData].sort(() => Math.random() - 0.5);
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            timeSpent = [];
+            quizStartTime = Date.now();
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+            
+            const question = quizQuestions[currentQuestionIndex];
+            questionStartTime = Date.now();
+            
+            document.getElementById('quiz-progress').textContent = `문제 ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            document.getElementById('quiz-category').textContent = question.category;
+            document.getElementById('quiz-question').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'quiz-option';
+                optionDiv.onclick = () => selectAnswer(index);
+                optionDiv.innerHTML = `
+                    <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('quiz-next-btn').style.display = 'none';
+            selectedAnswer = null;
+        }
+        
+        function selectAnswer(index) {
+            if (selectedAnswer !== null) return;
+            
+            selectedAnswer = index;
+            const question = quizQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('.quiz-option');
+            const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
+            timeSpent.push(timeTaken);
+            
+            options[index].classList.add('selected');
+            
+            setTimeout(() => {
+                options[question.correct].classList.add('correct');
+                if (index !== question.correct) {
+                    options[index].classList.remove('selected');
+                    options[index].classList.add('incorrect');
+                } else {
+                    score++;
+                }
+                
+                const feedback = document.getElementById('quiz-feedback');
+                const feedbackTitle = document.getElementById('feedback-title');
+                const feedbackText = document.getElementById('feedback-text');
+                
+                if (index === question.correct) {
+                    feedbackTitle.textContent = '✅ 정답입니다!';
+                    feedbackTitle.style.color = 'var(--success)';
+                } else {
+                    feedbackTitle.textContent = '❌ 틀렸습니다';
+                    feedbackTitle.style.color = 'var(--danger)';
+                }
+                
+                feedbackText.textContent = question.explanation;
+                feedback.style.display = 'block';
+                document.getElementById('quiz-next-btn').style.display = 'block';
+            }, 300);
+        }
+        
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+        
+        function showResults() {
+            const totalTime = Math.round((Date.now() - quizStartTime) / 1000);
+            const avgTime = Math.round(timeSpent.reduce((a, b) => a + b, 0) / timeSpent.length);
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            
+            document.getElementById('final-score').textContent = `${score}/${quizQuestions.length}`;
+            document.getElementById('final-percentage').textContent = `${percentage}%`;
+            document.getElementById('total-time').textContent = formatTime(totalTime);
+            document.getElementById('avg-time').textContent = `${avgTime}초`;
+            
+            goToScreen('quiz-result-screen');
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        
+        function restartQuiz() {
+            goToScreen('quiz-screen');
+        }
+        
+        // 회의록 관련 함수
+        function loadMeetings() {
+            const listContainer = document.getElementById('meeting-list');
+            const emptyState = document.getElementById('empty-meeting');
+            
+            if (meetings.length === 0) {
+                listContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            listContainer.style.display = 'block';
+            emptyState.style.display = 'none';
+            listContainer.innerHTML = '';
+            
+            // 날짜순으로 정렬 (최신순)
+            const sortedMeetings = [...meetings].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            sortedMeetings.forEach(meeting => {
+                const meetingDiv = document.createElement('div');
+                meetingDiv.className = 'list-item';
+                meetingDiv.onclick = () => showMeetingDetail(meeting.id);
+                
+                const dateObj = new Date(meeting.date);
+                const formattedDate = `${dateObj.getFullYear()}.${String(dateObj.getMonth() + 1).padStart(2, '0')}.${String(dateObj.getDate()).padStart(2, '0')}`;
+                
+                meetingDiv.innerHTML = `
+                    <div style="flex: 1;">
+                        <div class="list-title">${meeting.title}</div>
+                        <div class="list-subtitle">${formattedDate} · ${meeting.attendees || '참석자 미기재'}</div>
+                    </div>
+                    <div class="list-arrow">→</div>
+                `;
+                listContainer.appendChild(meetingDiv);
+            });
+        }
+        
+        function showAddMeetingForm() {
+            // 폼 초기화
+            document.getElementById('meeting-title').value = '';
+            document.getElementById('meeting-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('meeting-attendees').value = '';
+            document.getElementById('meeting-link').value = '';
+            currentMeetingId = null;
+            
+            goToScreen('meeting-form-screen');
+        }
+        
+        function saveMeeting() {
+            const title = document.getElementById('meeting-title').value.trim();
+            const date = document.getElementById('meeting-date').value;
+            const attendees = document.getElementById('meeting-attendees').value.trim();
+            const link = document.getElementById('meeting-link').value.trim();
+            
+            if (!title) {
+                alert('회의 제목을 입력해주세요.');
+                return;
+            }
+            
+            if (!date) {
+                alert('회의 날짜를 선택해주세요.');
+                return;
+            }
+            
+            if (!link) {
+                alert('구글 문서 링크를 입력해주세요.');
+                return;
+            }
+            
+            // 간단한 URL 유효성 검사
+            if (!link.startsWith('http://') && !link.startsWith('https://')) {
+                alert('올바른 링크를 입력해주세요. (http:// 또는 https://로 시작)');
+                return;
+            }
+            
+            const meeting = {
+                id: currentMeetingId || Date.now(),
+                title: title,
+                date: date,
+                attendees: attendees,
+                link: link,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (currentMeetingId) {
+                // 수정
+                const index = meetings.findIndex(m => m.id === currentMeetingId);
+                if (index > -1) {
+                    meetings[index] = meeting;
+                }
+            } else {
+                // 새로 추가
+                meetings.push(meeting);
+            }
+            
+            localStorage.setItem('meetings', JSON.stringify(meetings));
+            goToScreen('meeting-screen');
+        }
+        
+        function cancelMeetingForm() {
+            goToScreen('meeting-screen');
+        }
+        
+        function showMeetingDetail(id) {
+            const meeting = meetings.find(m => m.id === id);
+            if (!meeting) return;
+            
+            currentMeetingId = meeting.id;
+            
+            const dateObj = new Date(meeting.date);
+            const formattedDate = `${dateObj.getFullYear()}년 ${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일`;
+            
+            document.getElementById('detail-meeting-title').textContent = meeting.title;
+            document.getElementById('detail-meeting-date').textContent = formattedDate;
+            document.getElementById('detail-meeting-attendees').textContent = meeting.attendees || '-';
+            
+            const linkElement = document.getElementById('detail-meeting-link');
+            linkElement.href = meeting.link;
+            
+            // 구글 문서 임베드 URL 생성
+            let embedUrl = meeting.link;
+            
+            // 구글 문서를 공개 뷰어로 변환
+            if (embedUrl.includes('docs.google.com/document')) {
+                // 문서 ID 추출
+                const docIdMatch = embedUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                if (docIdMatch) {
+                    const docId = docIdMatch[1];
+                    // 공개 뷰어 URL로 변경
+                    embedUrl = `https://docs.google.com/document/d/${docId}/preview?embedded=true`;
+                }
+            } else if (embedUrl.includes('drive.google.com/file')) {
+                // 드라이브 링크인 경우
+                const fileIdMatch = embedUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                if (fileIdMatch) {
+                    const fileId = fileIdMatch[1];
+                    embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                }
+            } else if (embedUrl.includes('drive.google.com/open')) {
+                // drive.google.com/open?id= 형식
+                const fileIdMatch = embedUrl.match(/id=([a-zA-Z0-9-_]+)/);
+                if (fileIdMatch) {
+                    const fileId = fileIdMatch[1];
+                    embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                }
+            }
+            
+            document.getElementById('doc-iframe').src = embedUrl;
+            
+            // 문서 뷰어 초기화 (숨김 상태로)
+            document.getElementById('doc-viewer-container').style.display = 'none';
+            document.getElementById('toggle-btn-text').textContent = '□ 보기';
+            
+            goToScreen('meeting-detail-screen');
+        }
+        
+        function toggleDocView() {
+            const container = document.getElementById('doc-viewer-container');
+            const btnText = document.getElementById('toggle-btn-text');
+            
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                btnText.textContent = '숨기기';
+            } else {
+                container.style.display = 'none';
+                btnText.textContent = '보기';
+            }
+        }
+        
+        function showDeleteConfirm() {
+            const meeting = meetings.find(m => m.id === currentMeetingId);
+            if (meeting) {
+                document.getElementById('delete-confirm-text').textContent = `"${meeting.title}" 회의록을 삭제하시겠습니까?`;
+                document.getElementById('delete-modal').style.display = 'flex';
+            }
+        }
+        
+        function hideDeleteConfirm() {
+            document.getElementById('delete-modal').style.display = 'none';
+        }
+        
+        function confirmDelete() {
+            console.log('확인 버튼 클릭 - 삭제 진행');
+            
+            if (!currentMeetingId) {
+                alert('삭제할 회의록 정보를 찾을 수 없습니다.');
+                hideDeleteConfirm();
+                return;
+            }
+            
+            console.log('삭제 전 meetings:', meetings);
+            meetings = meetings.filter(m => m.id !== currentMeetingId);
+            console.log('삭제 후 meetings:', meetings);
+            
+            localStorage.setItem('meetings', JSON.stringify(meetings));
+            currentMeetingId = null;
+            
+            hideDeleteConfirm();
+            goToScreen('meeting-screen');
+        }
+        
+        function deleteMeeting() {
+            console.log('deleteMeeting 함수 실행됨');
+            console.log('currentMeetingId:', currentMeetingId);
+            console.log('현재 meetings 배열:', meetings);
+            
+            if (!currentMeetingId) {
+                console.error('currentMeetingId가 없습니다!');
+                alert('삭제할 회의록 정보를 찾을 수 없습니다.');
+                return;
+            }
+            
+            const meeting = meetings.find(m => m.id === currentMeetingId);
+            console.log('찾은 meeting:', meeting);
+            
+            if (!meeting) {
+                console.error('회의록을 찾을 수 없습니다!');
+                alert('회의록을 찾을 수 없습니다.');
+                return;
+            }
+            
+            const confirmDelete = confirm(`"${meeting.title}" 회의록을 삭제하시겠습니까?`);
+            console.log('삭제 확인:', confirmDelete);
+            
+            if (confirmDelete) {
+                console.log('삭제 전 meetings 길이:', meetings.length);
+                meetings = meetings.filter(m => m.id !== currentMeetingId);
+                console.log('삭제 후 meetings 길이:', meetings.length);
+                
+                localStorage.setItem('meetings', JSON.stringify(meetings));
+                console.log('localStorage에 저장 완료');
+                
+                currentMeetingId = null;
+                console.log('meeting-screen으로 이동');
+                
+                goToScreen('meeting-screen');
+            } else {
+                console.log('삭제 취소됨');
+            }
+        }
+    </script>
+</body>
+</html>

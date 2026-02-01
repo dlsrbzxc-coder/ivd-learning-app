@@ -875,165 +875,21 @@
         
         <!-- 영업부 회의록 화면 -->
         <div class="screen" id="meeting-screen">
-            <div class="header">
-                <h1>영업부 회의록</h1>
-                <p>팀 회의 기록을 확인하세요</p>
+            <div class="header" style="background: linear-gradient(135deg, #0f9d58 0%, #0b8043 100%);">
+                <h1>영업부 회의 자료실</h1>
+                <p>구글 드라이브와 실시간 동기화됩니다</p>
             </div>
             
             <div style="padding: 20px 20px 120px 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3 style="color: var(--gray-900); font-size: 18px; font-weight: 600;">회의록 목록</h3>
-                    <button style="background: var(--primary); color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm);" onclick="showAddMeetingForm()">
-                        + 새 회의록
-                    </button>
+                <div style="background: white; border-radius: 16px; overflow: hidden; border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);">
+                    <iframe src="https://drive.google.com/embeddedfolderview?id=1W3Bo89D7JixrcDj0fPvfpS9hduFn8CuU#list" 
+                            width="100%" height="650" frameborder="0"></iframe>
                 </div>
                 
-                <div id="meeting-list">
-                    <!-- JavaScript로 동적 생성 -->
-                </div>
-                
-                <div id="empty-meeting" style="display: none;" class="empty-state">
-                    
-                    <h3>등록된 회의록이 없습니다</h3>
-                    <p>새 회의록 버튼을 눌러 추가하세요</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 회의록 작성 화면 -->
-        <div class="screen" id="meeting-form-screen">
-            <div class="header">
-                <h1>회의록 등록</h1>
-                <p>구글 문서 링크를 등록하세요</p>
-            </div>
-            
-            <div style="padding: 20px 20px 120px 20px;">
-                <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200);">
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">회의 제목 *</label>
-                        <input type="text" id="meeting-title" placeholder="예: 2026년 1분기 영업 전략 회의" style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
-                    </div>
-                    
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">회의 날짜 *</label>
-                        <input type="date" id="meeting-date" style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
-                    </div>
-                    
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">참석자</label>
-                        <input type="text" id="meeting-attendees" placeholder="예: 김팀장, 이대리, 박사원" style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
-                    </div>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; color: var(--gray-700); font-weight: 600; margin-bottom: 8px; font-size: 14px;">구글 문서 링크 *</label>
-                        <input type="url" id="meeting-link" placeholder="https://docs.google.com/document/d/..." style="width: 100%; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; outline: none; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary)';" onblur="this.style.borderColor='var(--gray-300)';">
-                        <div style="color: var(--gray-500); font-size: 12px; margin-top: 6px;">
-                            구글 문서 → "공유" → "링크 복사" 후 붙여넣기
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 12px;">
-                        <button style="flex: 1; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md);" onclick="saveMeeting()">
-                            등록하기
-                        </button>
-                        <button style="flex: 1; padding: 14px; background: white; color: var(--gray-700); border: 2px solid var(--gray-300); border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;" onclick="cancelMeetingForm()">
-                            취소
-                        </button>
-                    </div>
-                </div>
-                
-                <div style="background: var(--gray-100); border-radius: 12px; padding: 16px; margin-top: 16px; border: 1px solid var(--gray-200);">
-                    <div style="font-weight: 600; color: var(--gray-800); margin-bottom: 8px; font-size: 14px;">● 앱에서 보려면 공유 설정 필수!</div>
-                    <ol style="color: var(--gray-600); font-size: 13px; line-height: 1.8; padding-left: 20px; margin: 0;">
-                        <li>구글 문서 우측 상단 <strong>"공유"</strong> 클릭</li>
-                        <li><strong>"일반 액세스"</strong> 변경</li>
-                        <li><strong>"링크가 있는 모든 사용자"</strong> 선택</li>
-                        <li>권한: <strong>"뷰어"</strong> 또는 "편집자"</li>
-                        <li><strong>"링크 복사"</strong> → 여기에 붙여넣기</li>
-                    </ol>
-                    <div style="background: white; border-radius: 8px; padding: 12px; margin-top: 12px; border-left: 4px solid var(--primary);">
-                        <div style="font-size: 12px; color: var(--gray-700);">
-                            ▲ <strong>비공개 문서는 앱에서 볼 수 없습니다!</strong><br>
-                            반드시 위 단계대로 공유 설정을 해주세요.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 회의록 상세보기 화면 -->
-        <div class="screen" id="meeting-detail-screen">
-            <div class="header">
-                <h1>회의록 상세</h1>
-                <p>회의 내용을 확인하세요</p>
-            </div>
-            
-            <div style="padding: 20px 20px 120px 20px;">
-                <div class="back-button" style="margin: 0 0 20px 0;" onclick="goToScreen('meeting-screen')">←</div>
-                
-                <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200); margin-bottom: 16px;">
-                    <h2 id="detail-meeting-title" style="color: var(--gray-900); font-size: 20px; font-weight: 700; margin-bottom: 12px;"></h2>
-                    
-                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
-                        <div style="flex: 1;">
-                            <div style="color: var(--gray-500); font-size: 12px; margin-bottom: 4px;">날짜</div>
-                            <div id="detail-meeting-date" style="color: var(--gray-900); font-weight: 600; font-size: 13px;"></div>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="color: var(--gray-500); font-size: 12px; margin-bottom: 4px;">참석자</div>
-                            <div id="detail-meeting-attendees" style="color: var(--gray-900); font-weight: 600; font-size: 13px;"></div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-bottom: 12px;">
-                        <div style="display: flex; gap: 8px;">
-                            <a id="detail-meeting-link" href="#" target="_blank" style="flex: 1; display: block; background: var(--primary); color: white; text-decoration: none; padding: 10px 16px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 14px; box-shadow: var(--shadow-sm); transition: all 0.3s;">
-                                새 탭에서 열기
-                            </a>
-                            <button onclick="toggleDocView()" style="flex: 1; background: var(--secondary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: var(--shadow-sm);">
-                                <span id="toggle-btn-text">보기</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="doc-viewer-container" style="display: none; margin-top: 16px;">
-                        <div style="background: var(--gray-100); border-radius: 12px; overflow: hidden; border: 2px solid var(--gray-200);">
-                            <iframe id="doc-iframe" style="width: 100%; height: 500px; border: none; display: block;"></iframe>
-                        </div>
-                        <div style="color: var(--gray-500); font-size: 12px; text-align: center; margin-top: 8px;">
-                            스크롤하여 문서 전체를 확인할 수 있습니다
-                        </div>
-                    </div>
-                </div>
-                
-                <button id="delete-meeting-btn" style="width: 100%; padding: 14px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md);" onclick="showDeleteConfirm()">
-                    삭제하기
-                </button>
-            </div>
-        </div>
-        
-        <!-- 삭제 확인 모달 -->
-        <div id="delete-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
-            <div style="background: white; border-radius: 20px; padding: 30px; max-width: 340px; margin: 20px; box-shadow: var(--shadow-xl);">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div style="width: 64px; height: 64px; background: #fef2f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                            <line x1="12" y1="9" x2="12" y2="13"></line>
-                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                        </svg>
-                    </div>
-                    <h3 style="color: var(--gray-900); font-size: 20px; font-weight: 700; margin-bottom: 8px;">회의록 삭제</h3>
-                    <p id="delete-confirm-text" style="color: var(--gray-600); font-size: 14px; line-height: 1.6;"></p>
-                </div>
-                
-                <div style="display: flex; gap: 12px;">
-                    <button onclick="hideDeleteConfirm()" style="flex: 1; padding: 14px; background: var(--gray-200); color: var(--gray-700); border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;">
-                        취소
-                    </button>
-                    <button onclick="confirmDelete()" style="flex: 1; padding: 14px; background: var(--danger); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-md);">
-                        삭제
-                    </button>
+                <div style="margin-top: 16px; padding: 15px; background: #e8f5e9; border-radius: 12px; font-size: 13px; color: #2e7d32; line-height: 1.6;">
+                    <strong>💡 이용 안내</strong><br>
+                    • 구글 드라이브 앱에서 파일을 올리면 여기서 즉시 보입니다.<br>
+                    • 리스트에서 파일명을 누르면 바로 내용을 확인할 수 있습니다.
                 </div>
             </div>
         </div>

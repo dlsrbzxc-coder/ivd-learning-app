@@ -651,8 +651,8 @@
             <div class="header">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <h1 style="margin: 0;">그랜드 메드랩</h1>
-                    <button onclick="showBackupMenu()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                        백업
+                    <button onclick="location.reload()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        새로고침
                     </button>
                 </div>
                 <p>영업사원을 위한 학습 플랫폼</p>
@@ -713,6 +713,41 @@
                             <div style="color: white; font-size: 24px;">→</div>
                         </div>
                     </div>
+
+                    <!-- AI 사용법 게시판 -->
+                    <div class="category-card" onclick="goToAIGuide()" style="cursor: pointer; padding: 24px; background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); border-radius: 20px; box-shadow: var(--shadow-lg);">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="flex: 1;">
+                                <div style="color: white; font-size: 20px; font-weight: 700; margin-bottom: 4px;">AI 사용법 게시판</div>
+                                <div style="color: rgba(255,255,255,0.8); font-size: 14px;">AI 도구 활용 가이드</div>
+                                <div style="color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 4px; font-weight: 600;">ChatGPT · Claude · Gemini</div>
+                            </div>
+                            <div style="color: white; font-size: 24px;">→</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI 사용법 게시판 화면 -->
+        <div class="screen" id="ai-guide-screen">
+            <div class="back-button" onclick="goToScreen('home-screen')">←</div>
+            
+            <div class="header" style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);">
+                <h1>AI 사용법 게시판</h1>
+                <p>AI 활용법이 실시간으로 업데이트됩니다</p>
+            </div>
+            
+            <div style="padding: 20px 20px 120px 20px;">
+                <div style="background: white; border-radius: 16px; overflow: hidden; border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);">
+                    <iframe src="https://drive.google.com/embeddedfolderview?id=1cwaSDcO6L-K5pfeMoSsp8D8qh6OdWjlo#list" 
+                            width="100%" height="650" frameborder="0"></iframe>
+                </div>
+                
+                <div style="margin-top: 16px; padding: 15px; background: #e0f2fe; border-radius: 12px; font-size: 13px; color: #0369a1; line-height: 1.6;">
+                    <strong>💡 이용 안내</strong><br>
+                    • 구글 드라이브 앱에 자료를 올리면 여기서 즉시 보입니다.<br>
+                    • 목록에서 파일명을 누르면 바로 내용을 볼 수 있습니다.
                 </div>
             </div>
         </div>
@@ -727,9 +762,20 @@
             </div>
             
             <div style="padding: 20px 20px 100px 20px;">
-                <div style="margin-bottom: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
                     <button onclick="window.open('https://calendar.google.com/calendar/u/0/r?cid=68085263d241a32cb3d78e019e286ed5843eb10d706945bb23bd6cb2c0f496c5@group.calendar.google.com', '_blank')" style="
-                        width: 100%;
+                        padding: 12px;
+                        background: #f59e0b;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">
+                        달력 수정/추가하기
+                    </button>
+                    <button onclick="location.reload()" style="
                         padding: 12px;
                         background: white;
                         color: #f59e0b;
@@ -739,11 +785,11 @@
                         font-weight: 600;
                         cursor: pointer;
                     ">
-                        새 탭에서 열기
+                        새로고침
                     </button>
                 </div>
                 
-                <div style="position: relative; padding-bottom: 75%; height: 0; overflow: hidden; border-radius: 16px; box-shadow: var(--shadow-lg);">
+                <div style="position: relative; padding-bottom: 100%; height: 0; overflow: hidden; border-radius: 16px; box-shadow: var(--shadow-lg);">
                     <iframe 
                         src="https://calendar.google.com/calendar/embed?src=68085263d241a32cb3d78e019e286ed5843eb10d706945bb23bd6cb2c0f496c5%40group.calendar.google.com&ctz=Asia%2FSeoul" 
                         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
@@ -2191,6 +2237,10 @@
 
         function goToCalendar() {
             goToScreen('calendar-screen');
+        }
+
+        function goToAIGuide() {
+            goToScreen('ai-guide-screen');
         }
 
         function showRocheDetail(topic) {
